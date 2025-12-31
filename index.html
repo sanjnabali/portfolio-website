@@ -7,7 +7,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" as="script">
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <style>
         :root {
             --obsidian: #0B0E14;
@@ -34,6 +35,18 @@
             color: var(--text-primary);
             overflow-x: hidden;
             line-height: 1.6;
+        }
+
+        /* Loading optimization */
+        .hero, .fade-in {
+            content-visibility: auto;
+        }
+
+        /* GPU acceleration for animations */
+        .metric-card, .timeline-content, .node-card, 
+        .cluster, .leadership-card, .timeline-marker {
+            will-change: transform;
+            transform: translateZ(0);
         }
 
         /* Particle Canvas Background */
@@ -215,19 +228,30 @@
         .timeline-item {
             position: relative;
             margin-bottom: 4rem;
-            display: flex;
-            align-items: center;
-            justify-content: flex-end;
-            width: 100%;
+            display: grid;
+            grid-template-columns: 1fr 60px 1fr;
+            gap: 20px;
+            align-items: start;
             min-height: 80px;
         }
 
-        .timeline-item:nth-child(even) {
-            justify-content: flex-start;
+        .timeline-item:nth-child(odd) .timeline-content {
+            grid-column: 1;
+        }
+
+        .timeline-item:nth-child(odd) .timeline-marker {
+            grid-column: 2;
+        }
+
+        .timeline-item:nth-child(even) .timeline-content {
+            grid-column: 3;
+        }
+
+        .timeline-item:nth-child(even) .timeline-marker {
+            grid-column: 2;
         }
 
         .timeline-content {
-            width: calc(50% - 50px);
             background: rgba(59, 130, 246, 0.05);
             border: 2px solid rgba(59, 130, 246, 0.2);
             border-radius: 20px;
@@ -239,7 +263,7 @@
         .timeline-content::before {
             content: '';
             position: absolute;
-            width: 30px;
+            width: 20px;
             height: 2px;
             background: var(--neural-blue);
             top: 30px;
@@ -247,11 +271,11 @@
         }
 
         .timeline-item:nth-child(odd) .timeline-content::before {
-            right: -30px;
+            right: -20px;
         }
 
         .timeline-item:nth-child(even) .timeline-content::before {
-            left: -30px;
+            left: -20px;
         }
 
         .timeline-content:hover {
@@ -262,10 +286,6 @@
         }
 
         .timeline-marker {
-            position: absolute;
-            left: 50%;
-            top: 0;
-            transform: translateX(-50%);
             width: 60px;
             height: 60px;
             border-radius: 50%;
@@ -278,6 +298,7 @@
             font-weight: 700;
             box-shadow: 0 0 30px var(--glow-blue);
             z-index: 3;
+            position: relative;
         }
 
         .timeline-year {
@@ -755,20 +776,23 @@
             }
 
             .timeline-item {
-                flex-direction: row !important;
-                padding-left: 80px;
+                grid-template-columns: 50px 1fr;
+                gap: 20px;
                 margin-bottom: 2rem;
-                gap: 0;
+                padding: 0;
             }
 
-            .timeline-item:nth-child(even),
-            .timeline-item:nth-child(odd) {
-                flex-direction: row !important;
+            .timeline-item:nth-child(odd) .timeline-content,
+            .timeline-item:nth-child(even) .timeline-content {
+                grid-column: 2;
+            }
+
+            .timeline-item:nth-child(odd) .timeline-marker,
+            .timeline-item:nth-child(even) .timeline-marker {
+                grid-column: 1;
             }
 
             .timeline-marker {
-                position: absolute;
-                left: 0;
                 width: 50px;
                 height: 50px;
                 font-size: 1rem;
@@ -776,7 +800,6 @@
 
             .timeline-content {
                 padding: 1.25rem;
-                max-width: 100%;
             }
 
             .timeline-content::before {
@@ -909,7 +932,8 @@
             }
 
             .timeline-item {
-                padding-left: 70px;
+                grid-template-columns: 45px 1fr;
+                gap: 15px;
             }
 
             .timeline-marker {
@@ -971,6 +995,20 @@
             opacity: 1;
             transform: translateY(0);
         }
+
+        /* Ensure timeline is visible on load */
+        #journey {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .fade-in {
+                opacity: 1;
+                transform: none;
+                transition: none;
+            }
+        }
     </style>
 </head>
 <body>
@@ -987,7 +1025,7 @@
                 <div class="metrics-grid">
                     <div class="metric-card">
                         <div class="metric-value" data-target="80%-99%">0</div>
-                        <div class="metric-label">accuracy improvement</div>
+                        <div class="metric-label">Accuracy improved</div>
                     </div>
                     <div class="metric-card">
                         <div class="metric-value" data-target="70">0%</div>
@@ -1346,7 +1384,6 @@
                         <span class="tech-tag">FastAPI</span>
                         <span class="tech-tag">Python</span>
                         <span class="tech-tag">Docker</span>
-                        <span class="tech-tag">Generative-AI</span>
                         <span class="tech-tag">ChromaDB</span>
                     </div>
 
@@ -1375,10 +1412,12 @@
                     </p>
 
                     <div class="tech-stack">
-                        <span class="tech-tag">LangChain</span>
+                        <span class="tech-tag">Transfomers</span>
                         <span class="tech-tag">FAISS</span>
                         <span class="tech-tag">BERT</span>
                         <span class="tech-tag">Gemini API</span>
+                        <span class="tech-tag">RAG</span>
+                        <span class="tech-tag">Natural Language Processing</span>
                         <span class="tech-tag">Python</span>
                     </div>
 
@@ -1416,9 +1455,9 @@
                         <span class="skill-tag">TensorFlow</span>
                         <span class="skill-tag">Scikit-Learn</span>
                         <span class="skill-tag">Keras</span>
-                        <span class="skill-tag">Deep Learning algorithms</span>
+                        <span class="skill-tag">Python</span>
                         <span class="skill-tag">HuggingFace</span>
-                        <span class="skill-tag">Transformers</span>
+
                     </div>
                 </div>
 
@@ -1431,6 +1470,7 @@
                         <span class="skill-tag">RAG</span>
                         <span class="skill-tag">LLM Fine-Tuning</span>
                         <span class="skill-tag">LoRA</span>
+                        <span class="skill-tag">RAG</span>
                         <span class="skill-tag">Prompt Engineering</span>
                     </div>
                 </div>
@@ -1445,7 +1485,7 @@
                         <span class="skill-tag">FastAPI</span>
                         <span class="skill-tag">ChromaDB</span>
                         <span class="skill-tag">FAISS</span>
-                
+                    
                     </div>
                 </div>
 
@@ -1456,9 +1496,9 @@
                     </h3>
                     <div class="cluster-skills">
                         <span class="skill-tag">MLflow</span>
-                        <span class="skill-tag">Algorithms</span>
+                        <span class="skill-tag">Machine Learning Algorithms</span>
                         <span class="skill-tag">Streamlit</span>
-                        <span class="skill-tag">Optimization</span>
+                        <span class="skill-tag">Deep Learning Algorithms</span>
                         <span class="skill-tag">Model Deployment</span>
                     </div>
                 </div>
@@ -1563,16 +1603,17 @@
         particleCanvas.height = window.innerHeight;
 
         const particles = [];
-        const particleCount = 100;
+        const particleCount = window.innerWidth < 768 ? 50 : 80; // Reduced from 100
         const clusters = 5;
         let centroids = [];
+        let animationFrameId;
 
         class Particle {
             constructor() {
                 this.x = Math.random() * particleCanvas.width;
                 this.y = Math.random() * particleCanvas.height;
-                this.vx = (Math.random() - 0.5) * 0.5;
-                this.vy = (Math.random() - 0.5) * 0.5;
+                this.vx = (Math.random() - 0.5) * 0.3; // Reduced speed
+                this.vy = (Math.random() - 0.5) * 0.3;
                 this.cluster = 0;
             }
 
@@ -1604,7 +1645,11 @@
             });
         }
 
+        let frameCount = 0;
         function kMeansClustering() {
+            // Only run clustering every 30 frames for performance
+            if (frameCount % 30 !== 0) return;
+
             particles.forEach(particle => {
                 let minDist = Infinity;
                 let closestCluster = 0;
@@ -1637,15 +1682,16 @@
                 particle.draw();
             });
 
+            // Draw connections (optimized - only check nearby particles)
             particles.forEach((particle, i) => {
                 particles.slice(i + 1).forEach(otherParticle => {
                     if (particle.cluster === otherParticle.cluster) {
                         const dist = Math.hypot(particle.x - otherParticle.x, particle.y - otherParticle.y);
-                        if (dist < 100) {
+                        if (dist < 80) { // Reduced from 100
                             ctx.beginPath();
                             ctx.moveTo(particle.x, particle.y);
                             ctx.lineTo(otherParticle.x, otherParticle.y);
-                            ctx.strokeStyle = `rgba(59, 130, 246, ${(100 - dist) / 200})`;
+                            ctx.strokeStyle = `rgba(59, 130, 246, ${(80 - dist) / 160})`;
                             ctx.lineWidth = 0.5;
                             ctx.stroke();
                         }
@@ -1653,69 +1699,103 @@
                 });
             });
 
+            frameCount++;
             kMeansClustering();
-            requestAnimationFrame(animateParticles);
+            animationFrameId = requestAnimationFrame(animateParticles);
         }
 
-        animateParticles();
+        // Start particle animation after a small delay
+        setTimeout(() => animateParticles(), 100);
 
+        let resizeTimeout;
         window.addEventListener('resize', () => {
-            particleCanvas.width = window.innerWidth;
-            particleCanvas.height = window.innerHeight;
+            clearTimeout(resizeTimeout);
+            resizeTimeout = setTimeout(() => {
+                particleCanvas.width = window.innerWidth;
+                particleCanvas.height = window.innerHeight;
+            }, 250);
         });
 
         // ========================================
-        // 3D Manifold using Three.js
+        // 3D Manifold using Three.js (Lazy Loaded)
         // ========================================
         const manifoldCanvas = document.getElementById('manifold-canvas');
-        const scene = new THREE.Scene();
-        const camera = new THREE.PerspectiveCamera(75, manifoldCanvas.clientWidth / manifoldCanvas.clientHeight, 0.1, 1000);
-        const renderer = new THREE.WebGLRenderer({ canvas: manifoldCanvas, alpha: true, antialias: true });
-        
-        renderer.setSize(manifoldCanvas.clientWidth, manifoldCanvas.clientHeight);
-        renderer.setClearColor(0x0B0E14, 0.5);
-
-        const geometry = new THREE.TorusKnotGeometry(10, 3, 100, 16);
-        const material = new THREE.MeshPhongMaterial({
-            color: 0x3B82F6,
-            specular: 0x10B981,
-            shininess: 100,
-            wireframe: true
-        });
-        const manifold = new THREE.Mesh(geometry, material);
-        scene.add(manifold);
-
-        const light1 = new THREE.PointLight(0x3B82F6, 1, 100);
-        light1.position.set(10, 10, 10);
-        scene.add(light1);
-
-        const light2 = new THREE.PointLight(0x10B981, 1, 100);
-        light2.position.set(-10, -10, -10);
-        scene.add(light2);
-
-        camera.position.z = 30;
-
+        let scene, camera, renderer, manifold, light1, light2;
         let mouseX = 0;
         let mouseY = 0;
+        let manifoldInitialized = false;
 
-        manifoldCanvas.addEventListener('mousemove', (e) => {
-            const rect = manifoldCanvas.getBoundingClientRect();
-            mouseX = (e.clientX - rect.left) / rect.width * 2 - 1;
-            mouseY = -(e.clientY - rect.top) / rect.height * 2 + 1;
-        });
+        function initManifold() {
+            if (manifoldInitialized) return;
+            manifoldInitialized = true;
+
+            scene = new THREE.Scene();
+            camera = new THREE.PerspectiveCamera(75, manifoldCanvas.clientWidth / manifoldCanvas.clientHeight, 0.1, 1000);
+            renderer = new THREE.WebGLRenderer({ 
+                canvas: manifoldCanvas, 
+                alpha: true, 
+                antialias: false,
+                powerPreference: "high-performance"
+            });
+            
+            renderer.setSize(manifoldCanvas.clientWidth, manifoldCanvas.clientHeight);
+            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+            renderer.setClearColor(0x0B0E14, 0.5);
+
+            const geometry = new THREE.TorusKnotGeometry(10, 3, 64, 12);
+            const material = new THREE.MeshPhongMaterial({
+                color: 0x3B82F6,
+                specular: 0x10B981,
+                shininess: 100,
+                wireframe: true
+            });
+            manifold = new THREE.Mesh(geometry, material);
+            scene.add(manifold);
+
+            light1 = new THREE.PointLight(0x3B82F6, 1, 100);
+            light1.position.set(10, 10, 10);
+            scene.add(light1);
+
+            light2 = new THREE.PointLight(0x10B981, 1, 100);
+            light2.position.set(-10, -10, -10);
+            scene.add(light2);
+
+            camera.position.z = 30;
+
+            manifoldCanvas.addEventListener('mousemove', (e) => {
+                const rect = manifoldCanvas.getBoundingClientRect();
+                mouseX = (e.clientX - rect.left) / rect.width * 2 - 1;
+                mouseY = -(e.clientY - rect.top) / rect.height * 2 + 1;
+            });
+
+            animateManifold();
+        }
 
         function animateManifold() {
             requestAnimationFrame(animateManifold);
             
-            manifold.rotation.x += 0.005;
-            manifold.rotation.y += 0.005;
-            manifold.rotation.x += mouseY * 0.05;
-            manifold.rotation.y += mouseX * 0.05;
+            if (manifold) {
+                manifold.rotation.x += 0.005;
+                manifold.rotation.y += 0.005;
+                manifold.rotation.x += mouseY * 0.03;
+                manifold.rotation.y += mouseX * 0.03;
+            }
             
-            renderer.render(scene, camera);
+            if (renderer && scene && camera) {
+                renderer.render(scene, camera);
+            }
         }
 
-        animateManifold();
+        const manifoldObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting && !manifoldInitialized) {
+                    setTimeout(() => initManifold(), 300);
+                    manifoldObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.1 });
+
+        manifoldObserver.observe(manifoldCanvas);
 
         // ========================================
         // Counter Animation
@@ -1770,14 +1850,41 @@
             });
         }, { threshold: 0.1 });
 
-        document.querySelectorAll('.fade-in').forEach(el => {
-            scrollObserver.observe(el);
+        // Initialize observers immediately
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('.fade-in').forEach(el => {
+                scrollObserver.observe(el);
+                // Trigger check for elements already in view
+                const rect = el.getBoundingClientRect();
+                if (rect.top < window.innerHeight && rect.bottom > 0) {
+                    el.classList.add('visible');
+                }
+            });
         });
 
+        // Fallback for already loaded DOM
+        if (document.readyState === 'loading') {
+            // DOM not ready yet
+        } else {
+            // DOM already loaded
+            document.querySelectorAll('.fade-in').forEach(el => {
+                scrollObserver.observe(el);
+                const rect = el.getBoundingClientRect();
+                if (rect.top < window.innerHeight && rect.bottom > 0) {
+                    el.classList.add('visible');
+                }
+            });
+        }
+
         window.addEventListener('resize', () => {
-            camera.aspect = manifoldCanvas.clientWidth / manifoldCanvas.clientHeight;
-            camera.updateProjectionMatrix();
-            renderer.setSize(manifoldCanvas.clientWidth, manifoldCanvas.clientHeight);
+            if (camera && renderer) {
+                clearTimeout(window.manifoldResizeTimeout);
+                window.manifoldResizeTimeout = setTimeout(() => {
+                    camera.aspect = manifoldCanvas.clientWidth / manifoldCanvas.clientHeight;
+                    camera.updateProjectionMatrix();
+                    renderer.setSize(manifoldCanvas.clientWidth, manifoldCanvas.clientHeight);
+                }, 250);
+            }
         });
     </script>
 </body>
