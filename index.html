@@ -998,8 +998,17 @@
 
         /* Ensure timeline is visible on load */
         #journey {
-            opacity: 1;
-            transform: translateY(0);
+            opacity: 1 !important;
+            transform: translateY(0) !important;
+            visibility: visible !important;
+        }
+
+        .timeline-container,
+        .timeline-item,
+        .timeline-content,
+        .timeline-marker {
+            opacity: 1 !important;
+            visibility: visible !important;
         }
 
         @media (prefers-reduced-motion: reduce) {
@@ -1025,7 +1034,7 @@
                 <div class="metrics-grid">
                     <div class="metric-card">
                         <div class="metric-value" data-target="80%-99%">0</div>
-                        <div class="metric-label">Accuracy improved</div>
+                        <div class="metric-label">Accuracy Imporved</div>
                     </div>
                     <div class="metric-card">
                         <div class="metric-value" data-target="70">0%</div>
@@ -1044,7 +1053,7 @@
         </section>
 
         <!-- Journey Timeline Section -->
-        <section id="journey" class="fade-in">
+        <section id="journey">
             <h2 class="section-title">The Journey</h2>
             <p class="section-subtitle">From foundational coding to cutting-edge AI research—a story of continuous learning, innovation, and impact across three transformative years.</p>
 
@@ -1094,7 +1103,7 @@
                             <span class="timeline-tag">Data Visualization</span>
                         </div>
                         <div class="timeline-links">
-                            <a href="https://github.com/sanjnabali/Twitter-Sentiment-Analysis" target="_blank" class="timeline-link">
+                            <a href="https://github.com/sanjnabali/datainsights" target="_blank" class="timeline-link">
                                 📊 Twitter Sentiment Project
                             </a>
                         </div>
@@ -1143,9 +1152,7 @@
                             <span class="timeline-tag">Scientific Computing</span>
                         </div>
                         <div class="timeline-links">
-                            <a href="https://github.com/sanjnabali/AI-Powered-Query-Agent-for-Material-Science" target="_blank" class="timeline-link">
-                                🔬 Material Science AI Agent
-                            </a>
+                            
                         </div>
                         <div class="performance-card">
                             <div class="performance-metric">
@@ -1169,24 +1176,22 @@
                     <div class="timeline-marker">🧠</div>
                     <div class="timeline-content">
                         <div class="timeline-year">2024</div>
-                        <div class="timeline-phase">Privacy-Preserving Healthcare AI</div>
-                        <h3 class="timeline-title">Federated Learning for Brain Tumor Detection</h3>
+                        <div class="timeline-phase">Brain tumor detection and Image Processing</div>
+                        <h3 class="timeline-title">Using Computer graphics for Image processing</h3>
                         <p class="timeline-description">
                             Built a privacy-preserving brain tumor detection system using federated learning—ensuring medical data never leaves hospitals while still achieving collaborative model training. Pioneered ethical AI in healthcare with state-of-the-art diagnostic accuracy.
                         </p>
                         <div class="timeline-tags">
-                            <span class="timeline-tag">Federated Learning</span>
                             <span class="timeline-tag">Healthcare AI</span>
                             <span class="timeline-tag">TensorFlow</span>
                             <span class="timeline-tag">Medical Imaging</span>
-                            <span class="timeline-tag">Privacy-Preserving ML</span>
+                            <span class="timeline-tag">Image Processing</span>
                         </div>
                         <div class="timeline-links">
-                            <a href="https://github.com/sanjnabali/Brain-Tumor-Detection-Federated-Learning" target="_blank" class="timeline-link">
+                            <a href="https://github.com/sanjnabali/Braintumordetection" target="_blank" class="timeline-link">
                                 🏥 Brain Tumor Project
                             </a>
                         </div>
-                        <span class="achievement-badge">🔒 Ethical AI Innovation</span>
                     </div>
                 </div>
 
@@ -1208,11 +1213,7 @@
                             <span class="timeline-tag">AI Security</span>
                             <span class="timeline-tag">Team Leadership</span>
                         </div>
-                        <div class="timeline-links">
-                            <a href="https://github.com/sanjnabali/Dynamic-Visual-Audit" target="_blank" class="timeline-link">
-                                🛡️ Deepfake Detection System
-                            </a>
-                        </div>
+                        
                         <span class="achievement-badge">🥇 1st Place Winner - Team Leader</span>
                     </div>
                 </div>
@@ -1230,13 +1231,13 @@
                         <div class="timeline-tags">
                             <span class="timeline-tag">RAG</span>
                             <span class="timeline-tag">FastAPI</span>
-                            <span class="timeline-tag">Pinecone</span>
+                            <span class="timeline-tag">Python</span>
                             <span class="timeline-tag">Gemini</span>
                             <span class="timeline-tag">Production AI</span>
                             <span class="timeline-tag">Document Processing</span>
                         </div>
                         <div class="timeline-links">
-                            <a href="https://github.com/sanjnabali/Askllm" target="_blank" class="timeline-link">
+                            <a href="https://github.com/sanjnabali/Ask-LLM" target="_blank" class="timeline-link">
                                 📋 askLLM Platform
                             </a>
                         </div>
@@ -1265,17 +1266,94 @@
                         </p>
                         <div class="timeline-tags">
                             <span class="timeline-tag">Multimodal AI</span>
-                            <span class="timeline-tag">LangGraph</span>
+                            <span class="timeline-tag">Python</span>
                             <span class="timeline-tag">Vision-Language Models</span>
                             <span class="timeline-tag">Medical Imaging</span>
                             <span class="timeline-tag">RAG</span>
+                            <span class="timeline-tag">Kaggle Competition</span>
                         </div>
                         <div class="timeline-links">
-                            <a href="https://github.com/sanjnabali/Ocular-Disease-Recognition" target="_blank" class="timeline-link">
+                            <a href="https://www.kaggle.com/code/sanjnabali/cxcare-bot-health-analyser" target="_blank" class="timeline-link">
                                 👁️ Medical Vision AI
                             </a>
                         </div>
                         <span class="achievement-badge">🎁 Google Kaggle Swag Recipient</span>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-marker">👁️</div>
+                    <div class="timeline-content">
+                        <div class="timeline-year">2025</div>
+                        <div class="timeline-phase">Computer vision</div>
+                        <h3 class="timeline-title">utilizes transfer learning with the EfficientNetB0 architecture to classify images into "Normal" or "Cataract" categories.</h3>
+                        <p class="timeline-description">
+                            This project implements a Deep Learning solution to detect cataracts from retinal fundus images.
+                        </p>
+                        <div class="timeline-tags">
+                            <span class="timeline-tag">EfficientNetB0</span>
+                            <span class="timeline-tag">CLIP</span>
+                            <span class="timeline-tag">Computer Vision</span>
+                            <span class="timeline-tag">Image Processing</span>
+                        </div>
+                        <div class="timeline-links">
+                            <a href="https://github.com/sanjnabali/ocular-disease-detection" target="_blank" class="timeline-link">
+                                👁️ Ocular Disease Detection Project
+                            </a>
+                        </div>
+                </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-marker">🖥️</div>
+                    <div class="timeline-content">
+                        <div class="timeline-year">2025</div>
+                        <div class="timeline-phase">Learned AutoML</div>
+                        <h3 class="timeline-title">Worked on AutoML and classification</h3>
+                        <p class="timeline-description">
+                            The project compares three distinct approaches: standard Transfer Learning, Automated Machine Learning (AutoML), and Self-Supervised Pretraining.
+                        </p>
+                        <div class="timeline-tags">
+                            <span class="timeline-tag">EfficientNetB0</span>
+                            <span class="timeline-tag">CLIP</span>
+                            <span class="timeline-tag">Computer Vision</span>
+                            <span class="timeline-tag">Image Processing</span>
+                        </div>
+                        <div class="timeline-links">
+                            <a href="https://github.com/sanjnabali/AutoML-self-supervised-learning" target="_blank" class="timeline-link">
+                                AutoML and Self Supervised Learning 
+                            </a>
+                        </div>
+                </div>
+
+                </div>
+                
+                
+
+                
+
+                <div class="timeline-item">
+                    <div class="timeline-marker">🧠</div>
+                    <div class="timeline-content">
+                        <div class="timeline-year">2025</div>
+                        <div class="timeline-phase">Privacy-Preserving Healthcare AI</div>
+                        <h3 class="timeline-title">Federated Learning for Brain Tumor Detection</h3>
+                        <p class="timeline-description">
+                            Built a privacy-preserving brain tumor detection system using federated learning—ensuring medical data never leaves hospitals while still achieving collaborative model training. Pioneered ethical AI in healthcare with state-of-the-art diagnostic accuracy.
+                        </p>
+                        <div class="timeline-tags">
+                            <span class="timeline-tag">Federated Learning</span>
+                            <span class="timeline-tag">Healthcare AI</span>
+                            <span class="timeline-tag">TensorFlow</span>
+                            <span class="timeline-tag">Medical Imaging</span>
+                            <span class="timeline-tag">Privacy-Preserving ML</span>
+                        </div>
+                        <div class="timeline-links">
+                            <a href="https://github.com/sanjnabali/Personalized-Privacy-Aware-Federated-Segmentation-for-Brain-Tumors" target="_blank" class="timeline-link">
+                                🏥 Brain Tumor Project
+                            </a>
+                        </div>
+                        <span class="achievement-badge">🔒 Ethical AI Innovation</span>
                     </div>
                 </div>
 
@@ -1298,7 +1376,7 @@
                             <span class="timeline-tag">Self-Hosted AI</span>
                         </div>
                         <div class="timeline-links">
-                            <a href="https://github.com/sanjnabali/Aegis-AI-Studio" target="_blank" class="timeline-link">
+                            <a href="https://github.com/sanjnabali/Aegis-AI-studio" target="_blank" class="timeline-link">
                                 🚀 Aegis AI Platform
                             </a>
                         </div>
@@ -1382,8 +1460,9 @@
 
                     <div class="tech-stack">
                         <span class="tech-tag">FastAPI</span>
-                        <span class="tech-tag">Python</span>
+                        <span class="tech-tag">Vue 3</span>
                         <span class="tech-tag">Docker</span>
+                        <span class="tech-tag">PostgreSQL</span>
                         <span class="tech-tag">ChromaDB</span>
                     </div>
 
@@ -1412,12 +1491,10 @@
                     </p>
 
                     <div class="tech-stack">
-                        <span class="tech-tag">Transfomers</span>
+                        <span class="tech-tag">LangChain</span>
                         <span class="tech-tag">FAISS</span>
                         <span class="tech-tag">BERT</span>
                         <span class="tech-tag">Gemini API</span>
-                        <span class="tech-tag">RAG</span>
-                        <span class="tech-tag">Natural Language Processing</span>
                         <span class="tech-tag">Python</span>
                     </div>
 
@@ -1455,9 +1532,7 @@
                         <span class="skill-tag">TensorFlow</span>
                         <span class="skill-tag">Scikit-Learn</span>
                         <span class="skill-tag">Keras</span>
-                        <span class="skill-tag">Python</span>
-                        <span class="skill-tag">HuggingFace</span>
-
+                        <span class="skill-tag">XGBoost</span>
                     </div>
                 </div>
 
@@ -1470,7 +1545,8 @@
                         <span class="skill-tag">RAG</span>
                         <span class="skill-tag">LLM Fine-Tuning</span>
                         <span class="skill-tag">LoRA</span>
-                        <span class="skill-tag">RAG</span>
+                        <span class="skill-tag">LangGraph</span>
+                        <span class="skill-tag">LangChain</span>
                         <span class="skill-tag">Prompt Engineering</span>
                     </div>
                 </div>
@@ -1483,9 +1559,10 @@
                     <div class="cluster-skills">
                         <span class="skill-tag">Docker</span>
                         <span class="skill-tag">FastAPI</span>
+                        <span class="skill-tag">PostgreSQL</span>
                         <span class="skill-tag">ChromaDB</span>
                         <span class="skill-tag">FAISS</span>
-                    
+                        <span class="skill-tag">Pinecone</span>
                     </div>
                 </div>
 
@@ -1496,9 +1573,9 @@
                     </h3>
                     <div class="cluster-skills">
                         <span class="skill-tag">MLflow</span>
-                        <span class="skill-tag">Machine Learning Algorithms</span>
+                        <span class="skill-tag">Weights & Biases</span>
                         <span class="skill-tag">Streamlit</span>
-                        <span class="skill-tag">Deep Learning Algorithms</span>
+                        <span class="skill-tag">Gradio</span>
                         <span class="skill-tag">Model Deployment</span>
                     </div>
                 </div>
@@ -1850,9 +1927,12 @@
             });
         }, { threshold: 0.1 });
 
-        // Initialize observers immediately
+        // Initialize observers but skip journey section
         document.addEventListener('DOMContentLoaded', () => {
             document.querySelectorAll('.fade-in').forEach(el => {
+                // Skip journey section - it should always be visible
+                if (el.id === 'journey') return;
+                
                 scrollObserver.observe(el);
                 // Trigger check for elements already in view
                 const rect = el.getBoundingClientRect();
@@ -1863,11 +1943,10 @@
         });
 
         // Fallback for already loaded DOM
-        if (document.readyState === 'loading') {
-            // DOM not ready yet
-        } else {
-            // DOM already loaded
+        if (document.readyState !== 'loading') {
             document.querySelectorAll('.fade-in').forEach(el => {
+                if (el.id === 'journey') return;
+                
                 scrollObserver.observe(el);
                 const rect = el.getBoundingClientRect();
                 if (rect.top < window.innerHeight && rect.bottom > 0) {
