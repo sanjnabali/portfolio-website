@@ -1,0 +1,1784 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sanjna Bali - AI/ML Engineer & Researcher</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <style>
+        :root {
+            --obsidian: #0B0E14;
+            --neural-blue: #3B82F6;
+            --data-green: #10B981;
+            --accent-cyan: #06B6D4;
+            --accent-purple: #8B5CF6;
+            --accent-orange: #F59E0B;
+            --text-primary: #E5E7EB;
+            --text-secondary: #9CA3AF;
+            --glow-blue: rgba(59, 130, 246, 0.4);
+            --glow-green: rgba(16, 185, 129, 0.4);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--obsidian);
+            color: var(--text-primary);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* Particle Canvas Background */
+        #particle-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            opacity: 0.6;
+        }
+
+        /* Main Container */
+        .container {
+            position: relative;
+            z-index: 1;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 4rem;
+            padding: 4rem 0;
+            animation: fadeIn 1.2s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero-content {
+            flex: 1;
+            max-width: 600px;
+        }
+
+        .hero-title {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 3.5rem;
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, var(--neural-blue), var(--data-green));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-subtitle {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+            line-height: 1.8;
+        }
+
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .metric-card {
+            background: rgba(59, 130, 246, 0.05);
+            border: 1px solid rgba(59, 130, 246, 0.2);
+            border-radius: 12px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+            animation: slideUp 0.8s ease-out backwards;
+        }
+
+        .metric-card:nth-child(1) { animation-delay: 0.2s; }
+        .metric-card:nth-child(2) { animation-delay: 0.4s; }
+        .metric-card:nth-child(3) { animation-delay: 0.6s; }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .metric-card:hover {
+            background: rgba(59, 130, 246, 0.1);
+            border-color: var(--neural-blue);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px var(--glow-blue);
+        }
+
+        .metric-value {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--data-green);
+            margin-bottom: 0.5rem;
+        }
+
+        .metric-label {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        /* 3D Manifold Container */
+        .manifold-container {
+            flex: 1;
+            max-width: 500px;
+            height: 500px;
+            position: relative;
+        }
+
+        #manifold-canvas {
+            width: 100%;
+            height: 100%;
+            border-radius: 20px;
+            border: 2px solid rgba(59, 130, 246, 0.3);
+            background: rgba(11, 14, 20, 0.5);
+        }
+
+        /* Section Styling */
+        section {
+            padding: 6rem 0;
+            position: relative;
+        }
+
+        .section-title {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--neural-blue);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .section-subtitle {
+            font-size: 1.125rem;
+            color: var(--text-secondary);
+            margin-bottom: 3rem;
+            max-width: 800px;
+        }
+
+        /* Timeline Section */
+        .timeline-container {
+            position: relative;
+            padding: 2rem 0;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .timeline-line {
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: linear-gradient(180deg, var(--neural-blue), var(--data-green), var(--accent-purple));
+            transform: translateX(-50%);
+            z-index: 1;
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 4rem;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            width: 100%;
+            min-height: 80px;
+        }
+
+        .timeline-item:nth-child(even) {
+            justify-content: flex-start;
+        }
+
+        .timeline-content {
+            width: calc(50% - 50px);
+            background: rgba(59, 130, 246, 0.05);
+            border: 2px solid rgba(59, 130, 246, 0.2);
+            border-radius: 20px;
+            padding: 2rem;
+            position: relative;
+            transition: all 0.4s ease;
+        }
+
+        .timeline-content::before {
+            content: '';
+            position: absolute;
+            width: 30px;
+            height: 2px;
+            background: var(--neural-blue);
+            top: 30px;
+            z-index: 2;
+        }
+
+        .timeline-item:nth-child(odd) .timeline-content::before {
+            right: -30px;
+        }
+
+        .timeline-item:nth-child(even) .timeline-content::before {
+            left: -30px;
+        }
+
+        .timeline-content:hover {
+            border-color: var(--neural-blue);
+            background: rgba(59, 130, 246, 0.1);
+            transform: scale(1.02);
+            box-shadow: 0 15px 40px var(--glow-blue);
+        }
+
+        .timeline-marker {
+            position: absolute;
+            left: 50%;
+            top: 0;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--neural-blue), var(--data-green));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1.25rem;
+            font-weight: 700;
+            box-shadow: 0 0 30px var(--glow-blue);
+            z-index: 3;
+        }
+
+        .timeline-year {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1.75rem;
+            color: var(--neural-blue);
+            margin-bottom: 0.5rem;
+        }
+
+        .timeline-phase {
+            font-size: 0.875rem;
+            color: var(--accent-cyan);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 1rem;
+        }
+
+        .timeline-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+        }
+
+        .timeline-description {
+            color: var(--text-secondary);
+            line-height: 1.7;
+            margin-bottom: 1.5rem;
+        }
+
+        .timeline-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .timeline-tag {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            padding: 0.4rem 0.8rem;
+            background: rgba(16, 185, 129, 0.1);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            border-radius: 6px;
+            color: var(--data-green);
+        }
+
+        .timeline-links {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .timeline-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.25rem;
+            background: rgba(59, 130, 246, 0.1);
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            border-radius: 8px;
+            color: var(--neural-blue);
+            text-decoration: none;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.875rem;
+            transition: all 0.3s ease;
+        }
+
+        .timeline-link:hover {
+            background: var(--neural-blue);
+            color: var(--obsidian);
+            border-color: var(--neural-blue);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px var(--glow-blue);
+        }
+
+        .achievement-badge {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            background: linear-gradient(135deg, var(--accent-purple), var(--accent-orange));
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.875rem;
+            margin-top: 1rem;
+        }
+
+        /* System Impact Section */
+        .collaboration-graph {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 3rem;
+            margin-top: 3rem;
+        }
+
+        .node-card {
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.05), rgba(16, 185, 129, 0.05));
+            border: 2px solid transparent;
+            border-radius: 20px;
+            padding: 2.5rem;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .node-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border-radius: 20px;
+            padding: 2px;
+            background: linear-gradient(135deg, var(--neural-blue), var(--data-green));
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .node-card:hover::before {
+            opacity: 1;
+        }
+
+        .node-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 60px var(--glow-blue);
+        }
+
+        .node-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1.5rem;
+        }
+
+        .node-title {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1.5rem;
+            color: var(--neural-blue);
+            margin-bottom: 0.5rem;
+        }
+
+        .node-focus {
+            font-size: 0.875rem;
+            color: var(--data-green);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            padding: 0.25rem 0.75rem;
+            background: rgba(16, 185, 129, 0.1);
+            border-radius: 20px;
+            border: 1px solid rgba(16, 185, 129, 0.3);
+        }
+
+        .tech-stack {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+            margin: 1.5rem 0;
+        }
+
+        .tech-tag {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            padding: 0.5rem 1rem;
+            background: rgba(59, 130, 246, 0.1);
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            border-radius: 8px;
+            color: var(--neural-blue);
+            transition: all 0.3s ease;
+        }
+
+        .tech-tag:hover {
+            background: rgba(59, 130, 246, 0.2);
+            border-color: var(--neural-blue);
+            transform: scale(1.05);
+        }
+
+        .performance-card {
+            margin-top: 1.5rem;
+            padding: 1.5rem;
+            background: rgba(16, 185, 129, 0.05);
+            border-left: 3px solid var(--data-green);
+            border-radius: 8px;
+        }
+
+        .performance-metric {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.75rem;
+        }
+
+        .performance-label {
+            color: var(--text-secondary);
+        }
+
+        .performance-value {
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 600;
+            color: var(--data-green);
+        }
+
+        /* Tech Stack Clusters */
+        .tech-clusters {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .cluster {
+            background: rgba(59, 130, 246, 0.03);
+            border: 1px solid rgba(59, 130, 246, 0.2);
+            border-radius: 16px;
+            padding: 2rem;
+            transition: all 0.3s ease;
+        }
+
+        .cluster:hover {
+            background: rgba(59, 130, 246, 0.08);
+            border-color: var(--neural-blue);
+            transform: scale(1.02);
+        }
+
+        .cluster-title {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1.25rem;
+            color: var(--neural-blue);
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .cluster-icon {
+            font-size: 1.5rem;
+        }
+
+        .cluster-skills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+        }
+
+        .skill-tag {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.875rem;
+            padding: 0.5rem 1rem;
+            background: rgba(16, 185, 129, 0.1);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            border-radius: 8px;
+            color: var(--data-green);
+            transition: all 0.3s ease;
+        }
+
+        .skill-tag:hover {
+            background: rgba(16, 185, 129, 0.2);
+            border-color: var(--data-green);
+            box-shadow: 0 5px 15px var(--glow-green);
+        }
+
+        /* Leadership Section */
+        .leadership-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .leadership-card {
+            background: rgba(139, 92, 246, 0.05);
+            border: 2px solid rgba(139, 92, 246, 0.2);
+            border-radius: 16px;
+            padding: 2rem;
+            transition: all 0.3s ease;
+        }
+
+        .leadership-card:hover {
+            background: rgba(139, 92, 246, 0.1);
+            border-color: var(--accent-purple);
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(139, 92, 246, 0.3);
+        }
+
+        .leadership-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .leadership-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .leadership-description {
+            color: var(--text-secondary);
+            line-height: 1.7;
+        }
+
+        /* Terminal CTA */
+        .terminal-cta {
+            background: rgba(11, 14, 20, 0.95);
+            border: 2px solid var(--neural-blue);
+            border-radius: 12px;
+            padding: 3rem;
+            margin: 4rem 0;
+            font-family: 'JetBrains Mono', monospace;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+        }
+
+        .terminal-header {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid rgba(59, 130, 246, 0.3);
+        }
+
+        .terminal-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--data-green);
+        }
+
+        .terminal-dot:nth-child(2) {
+            background: #F59E0B;
+        }
+
+        .terminal-dot:nth-child(3) {
+            background: #EF4444;
+        }
+
+        .terminal-content {
+            font-size: 1.125rem;
+        }
+
+        .terminal-prompt {
+            color: var(--data-green);
+            margin-right: 0.5rem;
+        }
+
+        .terminal-command {
+            color: var(--neural-blue);
+            margin-left: 0.5rem;
+        }
+
+        .terminal-links {
+            display: flex;
+            gap: 2rem;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .terminal-link {
+            color: var(--neural-blue);
+            text-decoration: none;
+            padding: 0.75rem 1.5rem;
+            border: 1px solid var(--neural-blue);
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .terminal-link:hover {
+            background: var(--neural-blue);
+            color: var(--obsidian);
+            box-shadow: 0 5px 20px var(--glow-blue);
+            transform: translateY(-2px);
+        }
+
+        .cursor-blink {
+            animation: blink 1s step-end infinite;
+        }
+
+        @keyframes blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0; }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1200px) {
+            .container {
+                padding: 0 1.5rem;
+            }
+
+            .hero {
+                gap: 2rem;
+            }
+
+            .collaboration-graph {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 992px) {
+            .hero-title {
+                font-size: 3rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .tech-clusters {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .timeline-content {
+                padding: 1.5rem;
+            }
+
+            .node-card {
+                padding: 2rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 1rem;
+            }
+
+            section {
+                padding: 4rem 0;
+            }
+
+            .hero {
+                flex-direction: column;
+                text-align: center;
+                min-height: auto;
+                padding: 2rem 0;
+            }
+
+            .hero-content {
+                max-width: 100%;
+            }
+
+            .hero-title {
+                font-size: 2rem;
+                line-height: 1.3;
+            }
+
+            .hero-subtitle {
+                font-size: 1rem;
+            }
+
+            .manifold-container {
+                max-width: 100%;
+                height: 300px;
+            }
+
+            .metrics-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+
+            .metric-card {
+                padding: 1rem;
+            }
+
+            .metric-value {
+                font-size: 1.5rem;
+            }
+
+            /* Timeline Mobile Layout */
+            .timeline-line {
+                left: 30px;
+            }
+
+            .timeline-item {
+                flex-direction: row !important;
+                padding-left: 80px;
+                margin-bottom: 2rem;
+                gap: 0;
+            }
+
+            .timeline-item:nth-child(even),
+            .timeline-item:nth-child(odd) {
+                flex-direction: row !important;
+            }
+
+            .timeline-marker {
+                position: absolute;
+                left: 0;
+                width: 50px;
+                height: 50px;
+                font-size: 1rem;
+            }
+
+            .timeline-content {
+                padding: 1.25rem;
+                max-width: 100%;
+            }
+
+            .timeline-content::before {
+                display: none;
+            }
+
+            .timeline-year {
+                font-size: 1.5rem;
+            }
+
+            .timeline-phase {
+                font-size: 0.75rem;
+            }
+
+            .timeline-title {
+                font-size: 1.25rem;
+            }
+
+            .timeline-description {
+                font-size: 0.95rem;
+            }
+
+            .timeline-tags {
+                gap: 0.4rem;
+            }
+
+            .timeline-tag {
+                font-size: 0.7rem;
+                padding: 0.3rem 0.6rem;
+            }
+
+            .timeline-links {
+                flex-direction: column;
+                gap: 0.75rem;
+            }
+
+            .timeline-link {
+                justify-content: center;
+                font-size: 0.8rem;
+                padding: 0.6rem 1rem;
+            }
+
+            .achievement-badge {
+                font-size: 0.8rem;
+                padding: 0.4rem 0.8rem;
+            }
+
+            /* Section Titles */
+            .section-title {
+                font-size: 1.75rem;
+            }
+
+            .section-subtitle {
+                font-size: 1rem;
+            }
+
+            /* Cards */
+            .collaboration-graph,
+            .tech-clusters,
+            .leadership-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .node-card,
+            .cluster,
+            .leadership-card {
+                padding: 1.5rem;
+            }
+
+            .node-title,
+            .cluster-title,
+            .leadership-title {
+                font-size: 1.1rem;
+            }
+
+            .tech-stack {
+                gap: 0.5rem;
+            }
+
+            .tech-tag,
+            .skill-tag {
+                font-size: 0.7rem;
+                padding: 0.4rem 0.75rem;
+            }
+
+            .performance-card {
+                padding: 1rem;
+                font-size: 0.9rem;
+            }
+
+            .leadership-icon {
+                font-size: 2rem;
+            }
+
+            .leadership-description {
+                font-size: 0.95rem;
+            }
+
+            /* Terminal */
+            .terminal-cta {
+                padding: 2rem 1.5rem;
+            }
+
+            .terminal-content {
+                font-size: 0.95rem;
+            }
+
+            .terminal-links {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .terminal-link {
+                justify-content: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-title {
+                font-size: 1.75rem;
+            }
+
+            .hero-subtitle {
+                font-size: 0.95rem;
+            }
+
+            .section-title {
+                font-size: 1.5rem;
+            }
+
+            .timeline-item {
+                padding-left: 70px;
+            }
+
+            .timeline-marker {
+                width: 45px;
+                height: 45px;
+                font-size: 0.9rem;
+            }
+
+            .timeline-year {
+                font-size: 1.3rem;
+            }
+
+            .timeline-title {
+                font-size: 1.1rem;
+            }
+
+            .node-title,
+            .cluster-title,
+            .leadership-title {
+                font-size: 1rem;
+            }
+
+            .terminal-content {
+                font-size: 0.85rem;
+            }
+        }
+
+        /* Large Desktop Optimization */
+        @media (min-width: 1400px) {
+            .container {
+                max-width: 1600px;
+            }
+
+            .hero-title {
+                font-size: 4rem;
+            }
+
+            .section-title {
+                font-size: 3rem;
+            }
+
+            .tech-clusters {
+                grid-template-columns: repeat(4, 1fr);
+            }
+
+            .leadership-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        /* Scroll Animation */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+    <!-- Particle Canvas Background -->
+    <canvas id="particle-canvas"></canvas>
+
+    <div class="container">
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="hero-content">
+                <h1 class="hero-title">Sanjna Bali: Architecting Trusted Intelligence</h1>
+                <p class="hero-subtitle">Research-focused AI Engineer specializing in LLM Agentic Workflows, Federated Learning, and Building Production-Scale AI Systems</p>
+                
+                <div class="metrics-grid">
+                    <div class="metric-card">
+                        <div class="metric-value" data-target="10000">0</div>
+                        <div class="metric-label">Documents Indexed</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-value" data-target="70">0%</div>
+                        <div class="metric-label">Latency Reduction</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-value">🥇</div>
+                        <div class="metric-label">Hackathon Winner</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="manifold-container">
+                <canvas id="manifold-canvas"></canvas>
+            </div>
+        </section>
+
+        <!-- Journey Timeline Section -->
+        <section id="journey" class="fade-in">
+            <h2 class="section-title">The Journey</h2>
+            <p class="section-subtitle">From foundational coding to cutting-edge AI research—a story of continuous learning, innovation, and impact across three transformative years.</p>
+
+            <div class="timeline-container">
+                <div class="timeline-line"></div>
+
+                <!-- 2022: Foundation Phase -->
+                <div class="timeline-item">
+                    <div class="timeline-marker">2022</div>
+                    <div class="timeline-content">
+                        <div class="timeline-year">2022</div>
+                        <div class="timeline-phase">Foundation Phase</div>
+                        <h3 class="timeline-title">Building Computational Foundations</h3>
+                        <p class="timeline-description">
+                            Began the journey into software engineering with systematic practice on LeetCode and competitive coding. Established strong problem-solving fundamentals through consistent algorithm practice and data structure mastery—the bedrock for future AI engineering.
+                        </p>
+                        <div class="timeline-tags">
+                            <span class="timeline-tag">Data Structures</span>
+                            <span class="timeline-tag">Algorithms</span>
+                            <span class="timeline-tag">Problem Solving</span>
+                            <span class="timeline-tag">Python</span>
+                            <span class="timeline-tag">Competitive Coding</span>
+                        </div>
+                        <div class="timeline-links">
+                            <a href="https://github.com/sanjnabali" target="_blank" class="timeline-link">
+                                💻 View Coding Practice
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 2023: Machine Learning Emergence -->
+                <div class="timeline-item">
+                    <div class="timeline-marker">2023</div>
+                    <div class="timeline-content">
+                        <div class="timeline-year">2023</div>
+                        <div class="timeline-phase">ML Engineering Phase</div>
+                        <h3 class="timeline-title">First Steps into Machine Learning</h3>
+                        <p class="timeline-description">
+                            Transitioned from traditional programming to machine learning. Built a Twitter Sentiment Analysis system—my first real-world ML application analyzing social media emotions using NLP techniques. Learned the fundamentals of data preprocessing, feature extraction, and model evaluation.
+                        </p>
+                        <div class="timeline-tags">
+                            <span class="timeline-tag">Machine Learning</span>
+                            <span class="timeline-tag">NLP</span>
+                            <span class="timeline-tag">Sentiment Analysis</span>
+                            <span class="timeline-tag">Scikit-Learn</span>
+                            <span class="timeline-tag">Data Visualization</span>
+                        </div>
+                        <div class="timeline-links">
+                            <a href="https://github.com/sanjnabali/Twitter-Sentiment-Analysis" target="_blank" class="timeline-link">
+                                📊 Twitter Sentiment Project
+                            </a>
+                        </div>
+                        <span class="achievement-badge">🎓 Semester 3: Machine Learning Foundations</span>
+                    </div>
+                </div>
+
+                <!-- 2023-2024: Deep Learning Semester -->
+                <div class="timeline-item">
+                    <div class="timeline-marker">S4</div>
+                    <div class="timeline-content">
+                        <div class="timeline-year">2023-2024</div>
+                        <div class="timeline-phase">Deep Learning Evolution</div>
+                        <h3 class="timeline-title">Semester 4: Deep Neural Networks</h3>
+                        <p class="timeline-description">
+                            Dove deep into neural networks, computer vision, and advanced architectures. Mastered CNNs, transfer learning, and began working with medical imaging applications—setting the stage for healthcare AI projects.
+                        </p>
+                        <div class="timeline-tags">
+                            <span class="timeline-tag">Deep Learning</span>
+                            <span class="timeline-tag">CNNs</span>
+                            <span class="timeline-tag">Transfer Learning</span>
+                            <span class="timeline-tag">TensorFlow</span>
+                            <span class="timeline-tag">PyTorch</span>
+                            <span class="timeline-tag">Computer Vision</span>
+                        </div>
+                        <span class="achievement-badge">🎓 Advanced Neural Network Architectures</span>
+                    </div>
+                </div>
+
+                <!-- 2024: CSIR-CSIO Research Internship -->
+                <div class="timeline-item">
+                    <div class="timeline-marker">CSIR</div>
+                    <div class="timeline-content">
+                        <div class="timeline-year">2024</div>
+                        <div class="timeline-phase">Research & Scientific AI</div>
+                        <h3 class="timeline-title">CSIR-CSIO Scientific Research Internship</h3>
+                        <p class="timeline-description">
+                            Joined the Material Science Research Department at India's premier scientific institution. Developed an AI-powered query agent for material science using RAG pipelines, BERT, and Gemini models. Reduced research document processing time from 10 minutes to 3 minutes—a 70% efficiency gain.
+                        </p>
+                        <div class="timeline-tags">
+                            <span class="timeline-tag">RAG</span>
+                            <span class="timeline-tag">BERT</span>
+                            <span class="timeline-tag">LangChain</span>
+                            <span class="timeline-tag">FAISS</span>
+                            <span class="timeline-tag">Gemini API</span>
+                            <span class="timeline-tag">Scientific Computing</span>
+                        </div>
+                        <div class="timeline-links">
+                            <a href="https://github.com/sanjnabali/AI-Powered-Query-Agent-for-Material-Science" target="_blank" class="timeline-link">
+                                🔬 Material Science AI Agent
+                            </a>
+                        </div>
+                        <div class="performance-card">
+                            <div class="performance-metric">
+                                <span class="performance-label">Impact:</span>
+                                <span class="performance-value">70% Time Reduction</span>
+                            </div>
+                            <div class="performance-metric">
+                                <span class="performance-label">Documents Processed:</span>
+                                <span class="performance-value">66 PDFs + Images</span>
+                            </div>
+                            <div class="performance-metric">
+                                <span class="performance-label">Status:</span>
+                                <span class="performance-value">Still in Production at CSIR</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 2024: Brain Tumor Detection -->
+                <div class="timeline-item">
+                    <div class="timeline-marker">🧠</div>
+                    <div class="timeline-content">
+                        <div class="timeline-year">2024</div>
+                        <div class="timeline-phase">Privacy-Preserving Healthcare AI</div>
+                        <h3 class="timeline-title">Federated Learning for Brain Tumor Detection</h3>
+                        <p class="timeline-description">
+                            Built a privacy-preserving brain tumor detection system using federated learning—ensuring medical data never leaves hospitals while still achieving collaborative model training. Pioneered ethical AI in healthcare with state-of-the-art diagnostic accuracy.
+                        </p>
+                        <div class="timeline-tags">
+                            <span class="timeline-tag">Federated Learning</span>
+                            <span class="timeline-tag">Healthcare AI</span>
+                            <span class="timeline-tag">TensorFlow</span>
+                            <span class="timeline-tag">Medical Imaging</span>
+                            <span class="timeline-tag">Privacy-Preserving ML</span>
+                        </div>
+                        <div class="timeline-links">
+                            <a href="https://github.com/sanjnabali/Brain-Tumor-Detection-Federated-Learning" target="_blank" class="timeline-link">
+                                🏥 Brain Tumor Project
+                            </a>
+                        </div>
+                        <span class="achievement-badge">🔒 Ethical AI Innovation</span>
+                    </div>
+                </div>
+
+                <!-- 2024: GNA Hackathon - Deepfake Detection -->
+                <div class="timeline-item">
+                    <div class="timeline-marker">🏆</div>
+                    <div class="timeline-content">
+                        <div class="timeline-year">2024</div>
+                        <div class="timeline-phase">AI Security & Leadership</div>
+                        <h3 class="timeline-title">GNA University Hackathon Winner - Deepfake Detection</h3>
+                        <p class="timeline-description">
+                            Led team to 1st place victory building a deepfake detection system with integrated bias mitigation. Addressed the critical challenge of AI-generated misinformation while ensuring fairness across demographics. Demonstrated technical leadership and rapid prototyping under pressure.
+                        </p>
+                        <div class="timeline-tags">
+                            <span class="timeline-tag">Computer Vision</span>
+                            <span class="timeline-tag">Deepfake Detection</span>
+                            <span class="timeline-tag">PyTorch</span>
+                            <span class="timeline-tag">Bias Mitigation</span>
+                            <span class="timeline-tag">AI Security</span>
+                            <span class="timeline-tag">Team Leadership</span>
+                        </div>
+                        <div class="timeline-links">
+                            <a href="https://github.com/sanjnabali/Dynamic-Visual-Audit" target="_blank" class="timeline-link">
+                                🛡️ Deepfake Detection System
+                            </a>
+                        </div>
+                        <span class="achievement-badge">🥇 1st Place Winner - Team Leader</span>
+                    </div>
+                </div>
+
+                <!-- 2024: HackRX Document Analysis -->
+                <div class="timeline-item">
+                    <div class="timeline-marker">📄</div>
+                    <div class="timeline-content">
+                        <div class="timeline-year">2024</div>
+                        <div class="timeline-phase">Enterprise LLM Systems</div>
+                        <h3 class="timeline-title">askLLM - Production RAG for Document Analysis</h3>
+                        <p class="timeline-description">
+                            Architected an enterprise-grade document analysis system processing insurance policies, legal contracts, and compliance documents. Built with FastAPI, Pinecone vector DB, and Gemini—achieving sub-3 second response times with explainable AI decisions.
+                        </p>
+                        <div class="timeline-tags">
+                            <span class="timeline-tag">RAG</span>
+                            <span class="timeline-tag">FastAPI</span>
+                            <span class="timeline-tag">Pinecone</span>
+                            <span class="timeline-tag">Gemini</span>
+                            <span class="timeline-tag">Production AI</span>
+                            <span class="timeline-tag">Document Processing</span>
+                        </div>
+                        <div class="timeline-links">
+                            <a href="https://github.com/sanjnabali/Askllm" target="_blank" class="timeline-link">
+                                📋 askLLM Platform
+                            </a>
+                        </div>
+                        <div class="performance-card">
+                            <div class="performance-metric">
+                                <span class="performance-label">Response Time:</span>
+                                <span class="performance-value">&lt;3 seconds</span>
+                            </div>
+                            <div class="performance-metric">
+                                <span class="performance-label">Architecture:</span>
+                                <span class="performance-value">Production-Grade Microservices</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 2025: Kaggle Multimodal RAG -->
+                <div class="timeline-item">
+                    <div class="timeline-marker">🩺</div>
+                    <div class="timeline-content">
+                        <div class="timeline-year">2025</div>
+                        <div class="timeline-phase">Multimodal AI Systems</div>
+                        <h3 class="timeline-title">Google x Kaggle: Chest X-Ray Medical Assistant</h3>
+                        <p class="timeline-description">
+                            Built an advanced multimodal RAG system processing chest X-rays alongside clinical text using LangGraph and vision-language models. Earned official Google Kaggle swag for innovative implementation of vision-text fusion in healthcare diagnostics.
+                        </p>
+                        <div class="timeline-tags">
+                            <span class="timeline-tag">Multimodal AI</span>
+                            <span class="timeline-tag">LangGraph</span>
+                            <span class="timeline-tag">Vision-Language Models</span>
+                            <span class="timeline-tag">Medical Imaging</span>
+                            <span class="timeline-tag">RAG</span>
+                        </div>
+                        <div class="timeline-links">
+                            <a href="https://github.com/sanjnabali/Ocular-Disease-Recognition" target="_blank" class="timeline-link">
+                                👁️ Medical Vision AI
+                            </a>
+                        </div>
+                        <span class="achievement-badge">🎁 Google Kaggle Swag Recipient</span>
+                    </div>
+                </div>
+
+                <!-- 2025: Aegis AI Studio -->
+                <div class="timeline-item">
+                    <div class="timeline-marker">🛠️</div>
+                    <div class="timeline-content">
+                        <div class="timeline-year">2025</div>
+                        <div class="timeline-phase">Local AI Infrastructure</div>
+                        <h3 class="timeline-title">Aegis AI Studio - Complete Local AI Platform</h3>
+                        <p class="timeline-description">
+                            Engineered a comprehensive local AI platform with 6 HuggingFace models (GPT-OSS-20B, Llama Scout, DeepSeek Coder, SDXL Turbo) plus cloud integration. Built with Docker, OpenAI-compatible API, and WebUI—enabling privacy-focused AI deployment without cloud dependencies.
+                        </p>
+                        <div class="timeline-tags">
+                            <span class="timeline-tag">Docker</span>
+                            <span class="timeline-tag">HuggingFace</span>
+                            <span class="timeline-tag">LLMs</span>
+                            <span class="timeline-tag">API Design</span>
+                            <span class="timeline-tag">Infrastructure</span>
+                            <span class="timeline-tag">Self-Hosted AI</span>
+                        </div>
+                        <div class="timeline-links">
+                            <a href="https://github.com/sanjnabali/Aegis-AI-Studio" target="_blank" class="timeline-link">
+                                🚀 Aegis AI Platform
+                            </a>
+                        </div>
+                        <span class="achievement-badge">🔧 Full-Stack AI Infrastructure</span>
+                    </div>
+                </div>
+
+                <!-- 2025: Plaksha F1 Competition -->
+                <div class="timeline-item">
+                    <div class="timeline-marker">🏎️</div>
+                    <div class="timeline-content">
+                        <div class="timeline-year">2025</div>
+                        <div class="timeline-phase">Elite Competition & Research</div>
+                        <h3 class="timeline-title">Plaksha University x F1 Haas Team: Dynamic Visual Audit</h3>
+                        <p class="timeline-description">
+                            Selected for Top 10% nationwide (Team A.P.E.X) in Plaksha-F1 Haas collaboration among universities across India. Led development of DVA—a multi-stage AI system for real-time change detection using DINOv2, VLM analysis, and cascaded intelligence. Deployed on Streamlit Cloud for production use.
+                        </p>
+                        <div class="timeline-tags">
+                            <span class="timeline-tag">Computer Vision</span>
+                            <span class="timeline-tag">DINOv2</span>
+                            <span class="timeline-tag">VLM</span>
+                            <span class="timeline-tag">Real-Time AI</span>
+                            <span class="timeline-tag">Streamlit</span>
+                            <span class="timeline-tag">Team Leadership</span>
+                        </div>
+                        <div class="timeline-links">
+                            <a href="https://github.com/sanjnabali/Dynamic-Visual-Audit" target="_blank" class="timeline-link">
+                                🔍 DVA Project
+                            </a>
+                            <a href="https://dynamic-visual-audit-2glrbnufmrsk5qhcre6ylj.streamlit.app/" target="_blank" class="timeline-link">
+                                🌐 Live Demo (Image)
+                            </a>
+                            <a href="https://dynamic-visual-audit-nokebrosnkakxrhfc2fcyd.streamlit.app/" target="_blank" class="timeline-link">
+                                🎥 Live Demo (Video)
+                            </a>
+                        </div>
+                        <span class="achievement-badge">🏆 Top 10% - National Selection</span>
+                    </div>
+                </div>
+
+                <!-- 2025: BRS Alumni & Training -->
+                <div class="timeline-item">
+                    <div class="timeline-marker">👥</div>
+                    <div class="timeline-content">
+                        <div class="timeline-year">2025</div>
+                        <div class="timeline-phase">Leadership & Community Impact</div>
+                        <h3 class="timeline-title">Training, Mentorship & Community Service</h3>
+                        <p class="timeline-description">
+                            Gave coding training sessions to 50+ juniors at GNA University. Coordinated multiple technical events and hackathons. Proud member of BRS Alumni by Dr. Kiran Bedi (India's first IPS officer)—enhanced communication skills, leadership mindset, and social responsibility. Selected for Viksit Bharat Ambassador program by PMO India after clearing national quiz.
+                        </p>
+                        <div class="timeline-tags">
+                            <span class="timeline-tag">Technical Training</span>
+                            <span class="timeline-tag">Event Coordination</span>
+                            <span class="timeline-tag">Leadership</span>
+                            <span class="timeline-tag">BRS Alumni</span>
+                            <span class="timeline-tag">Viksit Bharat</span>
+                        </div>
+                        <span class="achievement-badge">🎯 Community Leader & Mentor</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- System Impact Section -->
+        <section id="experience" class="fade-in">
+            <h2 class="section-title">System Impact</h2>
+            <p class="section-subtitle">Enterprise-Scale AI Infrastructure & Research Optimization</p>
+
+            <div class="collaboration-graph">
+                <div class="node-card">
+                    <div class="node-header">
+                        <div>
+                            <h3 class="node-title">White Hat Coders</h3>
+                            <div class="node-focus">Enterprise Orchestration</div>
+                        </div>
+                    </div>
+                    
+                    <p class="timeline-description">
+                        Architected a scalable RAG pipeline processing 10,000+ documents with team-based orchestration and CI/CD deployment for production-grade document intelligence.
+                    </p>
+
+                    <div class="tech-stack">
+                        <span class="tech-tag">FastAPI</span>
+                        <span class="tech-tag">Python</span>
+                        <span class="tech-tag">Docker</span>
+                        <span class="tech-tag">Generative-AI</span>
+                        <span class="tech-tag">ChromaDB</span>
+                    </div>
+
+                    <div class="performance-card">
+                        <div class="performance-metric">
+                            <span class="performance-label">Architecture:</span>
+                            <span class="performance-value">Microservices</span>
+                        </div>
+                        <div class="performance-metric">
+                            <span class="performance-label">Deployment:</span>
+                            <span class="performance-value">Containerized CI/CD</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="node-card">
+                    <div class="node-header">
+                        <div>
+                            <h3 class="node-title">CSIR-CSIO</h3>
+                            <div class="node-focus">Scientific Optimization</div>
+                        </div>
+                    </div>
+                    
+                    <p class="timeline-description">
+                        Transformed research workflows by developing an automated RAG pipeline that revolutionized document processing efficiency at India's premier scientific institution.
+                    </p>
+
+                    <div class="tech-stack">
+                        <span class="tech-tag">LangChain</span>
+                        <span class="tech-tag">FAISS</span>
+                        <span class="tech-tag">BERT</span>
+                        <span class="tech-tag">Gemini API</span>
+                        <span class="tech-tag">Python</span>
+                    </div>
+
+                    <div class="performance-card">
+                        <div class="performance-metric">
+                            <span class="performance-label">Before:</span>
+                            <span class="performance-value">10 min manual process</span>
+                        </div>
+                        <div class="performance-metric">
+                            <span class="performance-label">After:</span>
+                            <span class="performance-value">3 min automated RAG</span>
+                        </div>
+                        <div class="performance-metric">
+                            <span class="performance-label">Improvement:</span>
+                            <span class="performance-value">70% Time Reduction</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Tech Stack Section -->
+        <section id="skills" class="fade-in">
+            <h2 class="section-title">Tech Stack</h2>
+            <p class="section-subtitle">Production-Grade AI Engineering Ecosystem</p>
+
+            <div class="tech-clusters">
+                <div class="cluster">
+                    <h3 class="cluster-title">
+                        <span class="cluster-icon">🧠</span>
+                        Core AI
+                    </h3>
+                    <div class="cluster-skills">
+                        <span class="skill-tag">PyTorch</span>
+                        <span class="skill-tag">TensorFlow</span>
+                        <span class="skill-tag">Scikit-Learn</span>
+                        <span class="skill-tag">Keras</span>
+                        <span class="skill-tag">Deep Learning algorithms</span>
+                        <span class="skill-tag">HuggingFace</span>
+                        <span class="skill-tag">Transformers</span>
+                    </div>
+                </div>
+
+                <div class="cluster">
+                    <h3 class="cluster-title">
+                        <span class="cluster-icon">🤖</span>
+                        Generative AI
+                    </h3>
+                    <div class="cluster-skills">
+                        <span class="skill-tag">RAG</span>
+                        <span class="skill-tag">LLM Fine-Tuning</span>
+                        <span class="skill-tag">LoRA</span>
+                        <span class="skill-tag">Prompt Engineering</span>
+                    </div>
+                </div>
+
+                <div class="cluster">
+                    <h3 class="cluster-title">
+                        <span class="cluster-icon">⚙️</span>
+                        Infrastructure
+                    </h3>
+                    <div class="cluster-skills">
+                        <span class="skill-tag">Docker</span>
+                        <span class="skill-tag">FastAPI</span>
+                        <span class="skill-tag">ChromaDB</span>
+                        <span class="skill-tag">FAISS</span>
+                
+                    </div>
+                </div>
+
+                <div class="cluster">
+                    <h3 class="cluster-title">
+                        <span class="cluster-icon">🔬</span>
+                        ML Engineering
+                    </h3>
+                    <div class="cluster-skills">
+                        <span class="skill-tag">MLflow</span>
+                        <span class="skill-tag">Algorithms</span>
+                        <span class="skill-tag">Streamlit</span>
+                        <span class="skill-tag">Optimization</span>
+                        <span class="skill-tag">Model Deployment</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Leadership Section -->
+        <section id="leadership" class="fade-in">
+            <h2 class="section-title">Leadership & Impact</h2>
+            <p class="section-subtitle">Building communities, mentoring future engineers, and driving technical excellence</p>
+
+            <div class="leadership-grid">
+                <div class="leadership-card">
+                    <div class="leadership-icon">🎓</div>
+                    <h3 class="leadership-title">Technical Training</h3>
+                    <p class="leadership-description">
+                        Conducted comprehensive coding training sessions for 50+ juniors at GNA University, teaching data structures, algorithms, and ML fundamentals.
+                    </p>
+                </div>
+
+                <div class="leadership-card">
+                    <div class="leadership-icon">🏆</div>
+                    <h3 class="leadership-title">Hackathon Leadership</h3>
+                    <p class="leadership-description">
+                        Led teams to victory in multiple hackathons, coordinating technical strategy, rapid prototyping, and presentation delivery under pressure.
+                    </p>
+                </div>
+
+                <div class="leadership-card">
+                    <div class="leadership-icon">🎪</div>
+                    <h3 class="leadership-title">Event Coordination</h3>
+                    <p class="leadership-description">
+                        Organized and hosted technical events at GNA University, fostering innovation culture and bringing industry experts to campus.
+                    </p>
+                </div>
+
+                <div class="leadership-card">
+                    <div class="leadership-icon">🌟</div>
+                    <h3 class="leadership-title">BRS Alumni Member</h3>
+                    <p class="leadership-description">
+                        Selected member of BRS Alumni by Dr. Kiran Bedi (India's first IPS officer), developing leadership skills, communication excellence, and social responsibility.
+                    </p>
+                </div>
+
+                <div class="leadership-card">
+                    <div class="leadership-icon">🇮🇳</div>
+                    <h3 class="leadership-title">Viksit Bharat Ambassador</h3>
+                    <p class="leadership-description">
+                        Selected for Viksit Bharat program by PMO India after clearing national quiz competition, contributing to India's development vision.
+                    </p>
+                </div>
+
+                <div class="leadership-card">
+                    <div class="leadership-icon">🤝</div>
+                    <h3 class="leadership-title">Community Building</h3>
+                    <p class="leadership-description">
+                        Active contributor to open-source AI projects and technical communities, sharing knowledge and building collaborative learning environments.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Terminal CTA -->
+        <section class="terminal-cta fade-in">
+            <div class="terminal-header">
+                <div class="terminal-dot"></div>
+                <div class="terminal-dot"></div>
+                <div class="terminal-dot"></div>
+            </div>
+            <div class="terminal-content">
+                <div>
+                    <span class="terminal-prompt">sanjnabali:~$</span>
+                    <span class="terminal-command">contact --email</span>
+                    <span class="cursor-blink">█</span>
+                </div>
+                <div class="terminal-links">
+                    <a href="mailto:sanjnabali8@gmail.com" class="terminal-link">
+                        📧 Email
+                    </a>
+                    <a href="https://github.com/sanjnabali" target="_blank" class="terminal-link">
+                        💻 GitHub
+                    </a>
+                    <a href="https://linkedin.com/in/sanjnabali" target="_blank" class="terminal-link">
+                        💼 LinkedIn
+                    </a>
+                    <a href="https://kaggle.com/sanjnabali" target="_blank" class="terminal-link">
+                        📊 Kaggle
+                    </a>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        // ========================================
+        // Particle System with K-Means Clustering
+        // ========================================
+        const particleCanvas = document.getElementById('particle-canvas');
+        const ctx = particleCanvas.getContext('2d');
+
+        particleCanvas.width = window.innerWidth;
+        particleCanvas.height = window.innerHeight;
+
+        const particles = [];
+        const particleCount = 100;
+        const clusters = 5;
+        let centroids = [];
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * particleCanvas.width;
+                this.y = Math.random() * particleCanvas.height;
+                this.vx = (Math.random() - 0.5) * 0.5;
+                this.vy = (Math.random() - 0.5) * 0.5;
+                this.cluster = 0;
+            }
+
+            update() {
+                this.x += this.vx;
+                this.y += this.vy;
+
+                if (this.x < 0 || this.x > particleCanvas.width) this.vx *= -1;
+                if (this.y < 0 || this.y > particleCanvas.height) this.vy *= -1;
+            }
+
+            draw() {
+                const colors = ['#3B82F6', '#10B981', '#06B6D4', '#8B5CF6', '#F59E0B'];
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, 2, 0, Math.PI * 2);
+                ctx.fillStyle = colors[this.cluster % colors.length];
+                ctx.fill();
+            }
+        }
+
+        for (let i = 0; i < particleCount; i++) {
+            particles.push(new Particle());
+        }
+
+        for (let i = 0; i < clusters; i++) {
+            centroids.push({
+                x: Math.random() * particleCanvas.width,
+                y: Math.random() * particleCanvas.height
+            });
+        }
+
+        function kMeansClustering() {
+            particles.forEach(particle => {
+                let minDist = Infinity;
+                let closestCluster = 0;
+
+                centroids.forEach((centroid, index) => {
+                    const dist = Math.hypot(particle.x - centroid.x, particle.y - centroid.y);
+                    if (dist < minDist) {
+                        minDist = dist;
+                        closestCluster = index;
+                    }
+                });
+
+                particle.cluster = closestCluster;
+            });
+
+            centroids.forEach((centroid, index) => {
+                const clusterParticles = particles.filter(p => p.cluster === index);
+                if (clusterParticles.length > 0) {
+                    centroid.x = clusterParticles.reduce((sum, p) => sum + p.x, 0) / clusterParticles.length;
+                    centroid.y = clusterParticles.reduce((sum, p) => sum + p.y, 0) / clusterParticles.length;
+                }
+            });
+        }
+
+        function animateParticles() {
+            ctx.clearRect(0, 0, particleCanvas.width, particleCanvas.height);
+
+            particles.forEach(particle => {
+                particle.update();
+                particle.draw();
+            });
+
+            particles.forEach((particle, i) => {
+                particles.slice(i + 1).forEach(otherParticle => {
+                    if (particle.cluster === otherParticle.cluster) {
+                        const dist = Math.hypot(particle.x - otherParticle.x, particle.y - otherParticle.y);
+                        if (dist < 100) {
+                            ctx.beginPath();
+                            ctx.moveTo(particle.x, particle.y);
+                            ctx.lineTo(otherParticle.x, otherParticle.y);
+                            ctx.strokeStyle = `rgba(59, 130, 246, ${(100 - dist) / 200})`;
+                            ctx.lineWidth = 0.5;
+                            ctx.stroke();
+                        }
+                    }
+                });
+            });
+
+            kMeansClustering();
+            requestAnimationFrame(animateParticles);
+        }
+
+        animateParticles();
+
+        window.addEventListener('resize', () => {
+            particleCanvas.width = window.innerWidth;
+            particleCanvas.height = window.innerHeight;
+        });
+
+        // ========================================
+        // 3D Manifold using Three.js
+        // ========================================
+        const manifoldCanvas = document.getElementById('manifold-canvas');
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, manifoldCanvas.clientWidth / manifoldCanvas.clientHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer({ canvas: manifoldCanvas, alpha: true, antialias: true });
+        
+        renderer.setSize(manifoldCanvas.clientWidth, manifoldCanvas.clientHeight);
+        renderer.setClearColor(0x0B0E14, 0.5);
+
+        const geometry = new THREE.TorusKnotGeometry(10, 3, 100, 16);
+        const material = new THREE.MeshPhongMaterial({
+            color: 0x3B82F6,
+            specular: 0x10B981,
+            shininess: 100,
+            wireframe: true
+        });
+        const manifold = new THREE.Mesh(geometry, material);
+        scene.add(manifold);
+
+        const light1 = new THREE.PointLight(0x3B82F6, 1, 100);
+        light1.position.set(10, 10, 10);
+        scene.add(light1);
+
+        const light2 = new THREE.PointLight(0x10B981, 1, 100);
+        light2.position.set(-10, -10, -10);
+        scene.add(light2);
+
+        camera.position.z = 30;
+
+        let mouseX = 0;
+        let mouseY = 0;
+
+        manifoldCanvas.addEventListener('mousemove', (e) => {
+            const rect = manifoldCanvas.getBoundingClientRect();
+            mouseX = (e.clientX - rect.left) / rect.width * 2 - 1;
+            mouseY = -(e.clientY - rect.top) / rect.height * 2 + 1;
+        });
+
+        function animateManifold() {
+            requestAnimationFrame(animateManifold);
+            
+            manifold.rotation.x += 0.005;
+            manifold.rotation.y += 0.005;
+            manifold.rotation.x += mouseY * 0.05;
+            manifold.rotation.y += mouseX * 0.05;
+            
+            renderer.render(scene, camera);
+        }
+
+        animateManifold();
+
+        // ========================================
+        // Counter Animation
+        // ========================================
+        function animateCounter(element, target, duration = 2000) {
+            const start = 0;
+            const increment = target / (duration / 16);
+            let current = start;
+
+            const timer = setInterval(() => {
+                current += increment;
+                if (current >= target) {
+                    current = target;
+                    clearInterval(timer);
+                }
+                
+                if (element.dataset.target === '70') {
+                    element.textContent = Math.floor(current) + '%';
+                } else {
+                    element.textContent = Math.floor(current).toLocaleString();
+                }
+            }, 16);
+        }
+
+        const observerOptions = {
+            threshold: 0.5,
+            rootMargin: '0px'
+        };
+
+        const counterObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const target = parseInt(entry.target.dataset.target);
+                    animateCounter(entry.target, target);
+                    counterObserver.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.metric-value[data-target]').forEach(el => {
+            counterObserver.observe(el);
+        });
+
+        // ========================================
+        // Scroll Animation for Sections
+        // ========================================
+        const scrollObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.fade-in').forEach(el => {
+            scrollObserver.observe(el);
+        });
+
+        window.addEventListener('resize', () => {
+            camera.aspect = manifoldCanvas.clientWidth / manifoldCanvas.clientHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(manifoldCanvas.clientWidth, manifoldCanvas.clientHeight);
+        });
+    </script>
+</body>
+</html>
