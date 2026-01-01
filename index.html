@@ -11,13 +11,15 @@
     <style>
         :root {
             --void-black: #000000;
-            --neural-cyan: #00F0FF;
-            --neural-magenta: #FF00F0;
-            --neural-yellow: #FFE600;
-            --neural-green: #00FF88;
-            --deep-purple: #6B00FF;
-            --glass-bg: rgba(0, 15, 30, 0.3);
-            --glass-border: rgba(0, 240, 255, 0.2);
+            --pure-white: #FFFFFF;
+            --soft-white: #F5F5F5;
+            --light-gray: #CCCCCC;
+            --medium-gray: #888888;
+            --dark-gray: #333333;
+            --accent-cyan: #00F0FF;
+            --accent-purple: #6B00FF;
+            --glass-bg: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(255, 255, 255, 0.15);
         }
 
         * {
@@ -51,7 +53,7 @@
         .cursor {
             width: 20px;
             height: 20px;
-            border: 2px solid var(--neural-cyan);
+            border: 2px solid var(--pure-white);
             border-radius: 50%;
             position: fixed;
             pointer-events: none;
@@ -63,7 +65,7 @@
         .cursor-follower {
             width: 40px;
             height: 40px;
-            border: 1px solid var(--neural-cyan);
+            border: 1px solid var(--light-gray);
             border-radius: 50%;
             position: fixed;
             pointer-events: none;
@@ -103,10 +105,7 @@
             font-family: 'Orbitron', sans-serif;
             font-size: 1.5rem;
             font-weight: 900;
-            background: linear-gradient(135deg, var(--neural-cyan), var(--neural-magenta));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            color: var(--pure-white);
             cursor: pointer;
         }
 
@@ -118,7 +117,7 @@
 
         .nav-links a {
             font-family: 'Space Mono', monospace;
-            color: white;
+            color: var(--light-gray);
             text-decoration: none;
             font-size: 1rem;
             text-transform: uppercase;
@@ -135,12 +134,12 @@
             left: 0;
             width: 0;
             height: 2px;
-            background: var(--neural-cyan);
+            background: var(--pure-white);
             transition: width 0.3s ease;
         }
 
         .nav-links a:hover {
-            color: var(--neural-cyan);
+            color: var(--pure-white);
         }
 
         .nav-links a:hover::after,
@@ -149,7 +148,7 @@
         }
 
         .nav-links a.active {
-            color: var(--neural-cyan);
+            color: var(--pure-white);
         }
 
         /* Container */
@@ -203,15 +202,9 @@
             font-family: 'Orbitron', sans-serif;
             font-size: 1rem;
             letter-spacing: 0.3em;
-            color: var(--neural-cyan);
+            color: var(--light-gray);
             text-transform: uppercase;
             margin-bottom: 1rem;
-            animation: scanline 3s linear infinite;
-        }
-
-        @keyframes scanline {
-            0%, 100% { text-shadow: 0 0 10px var(--neural-cyan); }
-            50% { text-shadow: 0 0 20px var(--neural-cyan), 0 0 30px var(--neural-cyan); }
         }
 
         .hero-title {
@@ -220,20 +213,16 @@
             font-weight: 900;
             line-height: 1.1;
             margin-bottom: 1rem;
-            background: linear-gradient(135deg, var(--neural-cyan), var(--neural-magenta), var(--neural-yellow));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            text-shadow: 0 0 80px rgba(0, 240, 255, 0.5);
+            color: var(--pure-white);
+            text-shadow: 0 0 80px rgba(255, 255, 255, 0.3);
         }
 
         .hero-subtitle {
             font-family: 'Space Mono', monospace;
             font-size: 1.3rem;
-            color: var(--neural-green);
+            color: var(--medium-gray);
             margin-bottom: 2rem;
             line-height: 1.8;
-            text-shadow: 0 0 10px rgba(0, 255, 136, 0.5);
         }
 
         /* Stats Cards */
@@ -279,7 +268,7 @@
 
         .stat-card:hover {
             transform: translateY(-10px) scale(1.02);
-            border-color: var(--neural-cyan);
+            border-color: var(--pure-white);
             box-shadow: 0 20px 60px rgba(0, 240, 255, 0.4);
         }
 
@@ -287,10 +276,7 @@
             font-family: 'Orbitron', sans-serif;
             font-size: 3rem;
             font-weight: 900;
-            background: linear-gradient(135deg, var(--neural-cyan), var(--neural-green));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            color: var(--pure-white);
             margin-bottom: 0.5rem;
         }
 
@@ -326,10 +312,7 @@
             font-family: 'Orbitron', sans-serif;
             font-size: 4rem;
             font-weight: 900;
-            background: linear-gradient(135deg, var(--neural-cyan), var(--neural-magenta));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            color: var(--pure-white);
             margin-bottom: 1rem;
         }
 
@@ -355,9 +338,9 @@
             top: 0;
             bottom: 0;
             width: 4px;
-            background: linear-gradient(180deg, var(--neural-cyan), var(--neural-magenta), var(--neural-yellow));
+            background: linear-gradient(180deg, var(--light-gray), var(--pure-white), var(--light-gray));
             transform: translateX(-50%);
-            box-shadow: 0 0 20px var(--neural-cyan);
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
         }
 
         .timeline-item {
@@ -400,7 +383,7 @@
             position: absolute;
             width: 30px;
             height: 2px;
-            background: var(--neural-cyan);
+            background: var(--pure-white);
             top: 50px;
             box-shadow: 0 0 10px var(--neural-cyan);
         }
@@ -414,7 +397,7 @@
         }
 
         .timeline-content:hover {
-            border-color: var(--neural-cyan);
+            border-color: var(--pure-white);
             background: rgba(0, 240, 255, 0.05);
             transform: scale(1.02);
             box-shadow: 0 20px 60px rgba(0, 240, 255, 0.3);
@@ -427,7 +410,7 @@
         }
 
         .timeline-item:first-child .timeline-content:hover {
-            border-color: var(--neural-magenta);
+            border-color: var(--pure-white);
             background: linear-gradient(135deg, rgba(107, 0, 255, 0.15), rgba(255, 0, 240, 0.15));
             box-shadow: 0 25px 70px rgba(255, 0, 240, 0.4);
         }
@@ -442,34 +425,35 @@
             width: 80px;
             height: 80px;
             border-radius: 50%;
-            background: linear-gradient(135deg, var(--neural-cyan), var(--neural-magenta));
+            background: var(--pure-white);
+            color: var(--void-black);
             display: flex;
             align-items: center;
             justify-content: center;
             font-family: 'Orbitron', monospace;
             font-size: 1.5rem;
             font-weight: 900;
-            box-shadow: 0 0 40px var(--neural-cyan);
+            box-shadow: 0 0 40px rgba(255, 255, 255, 0.5);
             position: relative;
             animation: pulse 2s ease-in-out infinite;
         }
 
         @keyframes pulse {
-            0%, 100% { transform: scale(1); box-shadow: 0 0 40px var(--neural-cyan); }
-            50% { transform: scale(1.05); box-shadow: 0 0 60px var(--neural-cyan); }
+            0%, 100% { transform: scale(1); box-shadow: 0 0 40px rgba(255, 255, 255, 0.5); }
+            50% { transform: scale(1.05); box-shadow: 0 0 60px rgba(255, 255, 255, 0.7); }
         }
 
         .timeline-year {
             font-family: 'Orbitron', sans-serif;
             font-size: 2rem;
-            color: var(--neural-cyan);
+            color: var(--pure-white);
             margin-bottom: 0.5rem;
             text-shadow: 0 0 10px var(--neural-cyan);
         }
 
         .timeline-phase {
             font-size: 0.9rem;
-            color: var(--neural-yellow);
+            color: var(--light-gray);
             text-transform: uppercase;
             letter-spacing: 0.15em;
             margin-bottom: 1rem;
@@ -504,12 +488,12 @@
             background: rgba(0, 255, 136, 0.1);
             border: 1px solid var(--neural-green);
             border-radius: 20px;
-            color: var(--neural-green);
+            color: var(--light-gray);
             transition: all 0.3s ease;
         }
 
         .timeline-tag:hover {
-            background: var(--neural-green);
+            background: var(--light-gray);
             color: var(--void-black);
             box-shadow: 0 0 20px var(--neural-green);
         }
@@ -526,7 +510,7 @@
             background: rgba(0, 240, 255, 0.1);
             border: 1px solid var(--neural-cyan);
             border-radius: 25px;
-            color: var(--neural-cyan);
+            color: var(--pure-white);
             text-decoration: none;
             transition: all 0.3s ease;
             display: inline-flex;
@@ -535,7 +519,7 @@
         }
 
         .timeline-link:hover {
-            background: var(--neural-cyan);
+            background: var(--pure-white);
             color: var(--void-black);
             box-shadow: 0 0 30px var(--neural-cyan);
             transform: translateY(-3px);
@@ -544,11 +528,12 @@
         .achievement-badge {
             display: inline-block;
             padding: 0.75rem 1.5rem;
-            background: linear-gradient(135deg, var(--neural-magenta), var(--neural-yellow));
+            background: var(--pure-white);
+            color: var(--void-black);
             border-radius: 25px;
             font-weight: 700;
             margin-top: 1rem;
-            box-shadow: 0 0 20px var(--neural-magenta);
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.4);
         }
 
         .performance-card {
@@ -573,7 +558,7 @@
         .performance-value {
             font-family: 'Orbitron', sans-serif;
             font-weight: 700;
-            color: var(--neural-green);
+            color: var(--light-gray);
         }
 
         /* System Impact Cards */
@@ -609,7 +594,7 @@
 
         .impact-card:hover {
             transform: translateY(-10px);
-            border-color: var(--neural-cyan);
+            border-color: var(--pure-white);
             box-shadow: 0 30px 80px rgba(0, 240, 255, 0.4);
         }
 
@@ -620,14 +605,14 @@
         .impact-title {
             font-family: 'Orbitron', sans-serif;
             font-size: 1.8rem;
-            color: var(--neural-cyan);
+            color: var(--pure-white);
             margin-bottom: 1rem;
             position: relative;
         }
 
         .impact-role {
             font-size: 1rem;
-            color: var(--neural-green);
+            color: var(--light-gray);
             text-transform: uppercase;
             letter-spacing: 0.1em;
             margin-bottom: 1.5rem;
@@ -656,12 +641,12 @@
             background: rgba(0, 240, 255, 0.1);
             border: 1px solid var(--neural-cyan);
             border-radius: 20px;
-            color: var(--neural-cyan);
+            color: var(--pure-white);
             transition: all 0.3s ease;
         }
 
         .tech-tag:hover {
-            background: var(--neural-cyan);
+            background: var(--pure-white);
             color: var(--void-black);
         }
 
@@ -683,14 +668,14 @@
         }
 
         .skill-category:hover {
-            border-color: var(--neural-cyan);
+            border-color: var(--pure-white);
             box-shadow: 0 20px 60px rgba(0, 240, 255, 0.3);
         }
 
         .skill-category-title {
             font-family: 'Orbitron', sans-serif;
             font-size: 2rem;
-            color: var(--neural-cyan);
+            color: var(--pure-white);
             margin-bottom: 2rem;
             display: flex;
             align-items: center;
@@ -742,7 +727,7 @@
 
         .tech-sphere:hover {
             transform: translateY(-20px) scale(1.1) rotateY(10deg);
-            border-color: var(--neural-cyan);
+            border-color: var(--pure-white);
             box-shadow: 0 25px 70px rgba(0, 240, 255, 0.6);
         }
 
@@ -757,7 +742,7 @@
         .tech-name {
             font-family: 'Orbitron', sans-serif;
             font-size: 1rem;
-            color: var(--neural-cyan);
+            color: var(--pure-white);
             position: relative;
             z-index: 1;
             font-weight: 700;
@@ -782,7 +767,7 @@
 
         .leadership-card:hover {
             transform: translateY(-10px);
-            border-color: var(--neural-magenta);
+            border-color: var(--pure-white);
             box-shadow: 0 20px 60px rgba(255, 0, 240, 0.4);
         }
 
@@ -843,7 +828,7 @@
             width: 15px;
             height: 15px;
             border-radius: 50%;
-            background: var(--neural-green);
+            background: var(--light-gray);
         }
 
         .terminal-dot:nth-child(2) { background: var(--neural-yellow); }
@@ -856,11 +841,11 @@
         }
 
         .terminal-prompt {
-            color: var(--neural-green);
+            color: var(--light-gray);
         }
 
         .terminal-command {
-            color: var(--neural-cyan);
+            color: var(--pure-white);
         }
 
         .terminal-links {
@@ -876,7 +861,7 @@
             background: transparent;
             border: 2px solid var(--neural-cyan);
             border-radius: 30px;
-            color: var(--neural-cyan);
+            color: var(--pure-white);
             text-decoration: none;
             transition: all 0.3s ease;
             position: relative;
@@ -890,7 +875,7 @@
             left: -100%;
             width: 100%;
             height: 100%;
-            background: var(--neural-cyan);
+            background: var(--pure-white);
             transition: left 0.3s ease;
             z-index: -1;
         }
@@ -929,7 +914,7 @@
         .mobile-menu-btn span {
             width: 100%;
             height: 3px;
-            background: var(--neural-cyan);
+            background: var(--pure-white);
             transition: all 0.3s ease;
         }
 
@@ -1086,7 +1071,7 @@
         .loading-text {
             font-family: 'Orbitron', sans-serif;
             font-size: 2rem;
-            color: var(--neural-cyan);
+            color: var(--pure-white);
             animation: loadingPulse 1.5s ease-in-out infinite;
         }
 
@@ -1295,7 +1280,7 @@
                         <div class="timeline-tags">
                             <span class="timeline-tag">RAG</span>
                             <span class="timeline-tag">BERT</span>
-                            <span class="timeline-tag">LangChain</span>
+                            <span class="timeline-tag">Python</span>
                             <span class="timeline-tag">FAISS</span>
                             <span class="timeline-tag">Gemini API</span>
                             <span class="timeline-tag">Scientific Computing</span>
@@ -1601,7 +1586,7 @@
                         <span class="tech-tag">FastAPI</span>
                         <span class="tech-tag">Python</span>
                         <span class="tech-tag">Docker</span>
-                        <span class="tech-tag">PostgreSQL</span>
+                        <span class="tech-tag">RAG</span>
                         <span class="tech-tag">ChromaDB</span>
                     </div>
                     <div class="performance-card">
@@ -1848,7 +1833,7 @@
                     <span class="terminal-command"> connect --protocol=collaboration</span>
                     <span class="cursor-blink">█</span>
                 </div>
-                <div style="color: var(--neural-green); margin-top: 1rem;">
+                <div style="color: var(--light-gray); margin-top: 1rem;">
                     &gt; READY TO BUILD INTELLIGENT SYSTEMS TOGETHER
                 </div>
                 <div class="terminal-links">
@@ -1969,7 +1954,7 @@
         scene.add(particleSystem);
 
         // Add subtle grid
-        const gridHelper = new THREE.GridHelper(80, 15, 0x00F0FF, 0x00F0FF);
+        const gridHelper = new THREE.GridHelper(80, 15, 0xFFFFFF, 0xFFFFFF);
         gridHelper.material.opacity = 0.08;
         gridHelper.material.transparent = true;
         gridHelper.position.y = -25;
@@ -1979,7 +1964,7 @@
         // Neural network nodes
         const nodeGeometry = new THREE.SphereGeometry(0.3, 8, 8);
         const nodeMaterial = new THREE.MeshBasicMaterial({
-            color: 0x00F0FF,
+            color: 0xFFFFFF,
             transparent: true,
             opacity: 0.4
         });
@@ -2000,7 +1985,7 @@
 
         // Connection lines between nodes (neural network style)
         const lineMaterial = new THREE.LineBasicMaterial({
-            color: 0x00F0FF,
+            color: 0xFFFFFF,
             transparent: true,
             opacity: 0.15
         });
@@ -2021,7 +2006,7 @@
         // Floating AI symbols (very subtle)
         const aiSymbols = [];
         const symbolMaterial = new THREE.MeshBasicMaterial({
-            color: 0x6B00FF,
+            color: 0x888888,
             transparent: true,
             opacity: 0.2
         });
@@ -2076,7 +2061,8 @@
         animateScene();
 
         // ========================================
-        // 3D Robot (Realistic Humanoid)
+        // ========================================
+        // ARIA - Realistic AI Assistant (Sleek Holographic Design)
         // ========================================
         const robotCanvas = document.getElementById('robot-canvas');
         const robotRenderer = new THREE.WebGLRenderer({ canvas: robotCanvas, alpha: true, antialias: true });
@@ -2085,180 +2071,157 @@
 
         const robotScene = new THREE.Scene();
         const robotCamera = new THREE.PerspectiveCamera(50, robotCanvas.clientWidth / robotCanvas.clientHeight, 0.1, 1000);
-        robotCamera.position.set(0, 5, 20);
-        robotCamera.lookAt(0, 3, 0);
+        robotCamera.position.set(0, 0, 15);
 
-        // Create Humanoid Robot
-        const robotGroup = new THREE.Group();
+        // Create ARIA - Sleek AI Assistant
+        const ariaGroup = new THREE.Group();
 
-        // Head (sphere with visor)
-        const headGeometry = new THREE.SphereGeometry(1.5, 32, 32);
-        const headMaterial = new THREE.MeshPhongMaterial({
-            color: 0x00F0FF,
-            emissive: 0x00F0FF,
-            emissiveIntensity: 0.3,
-            shininess: 100
-        });
-        const head = new THREE.Mesh(headGeometry, headMaterial);
-        head.position.y = 8;
-        robotGroup.add(head);
-
-        // Visor (glowing rectangle on face)
-        const visorGeometry = new THREE.BoxGeometry(2, 0.5, 0.1);
-        const visorMaterial = new THREE.MeshBasicMaterial({
-            color: 0x00FF88,
+        // Core sphere (AI brain)
+        const coreGeometry = new THREE.SphereGeometry(2, 64, 64);
+        const coreMaterial = new THREE.MeshPhongMaterial({
+            color: 0xFFFFFF,
+            emissive: 0xFFFFFF,
+            emissiveIntensity: 0.4,
+            shininess: 100,
             transparent: true,
             opacity: 0.9
         });
-        const visor = new THREE.Mesh(visorGeometry, visorMaterial);
-        visor.position.set(0, 8, 1.4);
-        robotGroup.add(visor);
-
-        // Torso (larger rounded box)
-        const torsoGeometry = new THREE.BoxGeometry(3, 4, 2);
-        const torsoMaterial = new THREE.MeshPhongMaterial({
-            color: 0x6B00FF,
-            emissive: 0x6B00FF,
-            emissiveIntensity: 0.2
-        });
-        const torso = new THREE.Mesh(torsoGeometry, torsoMaterial);
-        torso.position.y = 4;
-        robotGroup.add(torso);
-
-        // Chest Core (glowing sphere)
-        const coreGeometry = new THREE.SphereGeometry(0.7, 16, 16);
-        const coreMaterial = new THREE.MeshBasicMaterial({
-            color: 0x00FF88,
-            transparent: true,
-            opacity: 0.8
-        });
         const core = new THREE.Mesh(coreGeometry, coreMaterial);
-        core.position.set(0, 4.5, 1);
-        robotGroup.add(core);
+        ariaGroup.add(core);
 
-        // Arms (cylinders with joints)
-        const armMaterial = new THREE.MeshPhongMaterial({
-            color: 0xFF00F0,
-            emissive: 0xFF00F0,
-            emissiveIntensity: 0.2
-        });
-
-        // Left arm
-        const leftArmGroup = new THREE.Group();
-        const leftUpperArm = new THREE.Mesh(new THREE.CylinderGeometry(0.4, 0.4, 2.5), armMaterial);
-        leftUpperArm.position.set(-2.2, 5, 0);
-        leftUpperArm.rotation.z = Math.PI / 6;
-        leftArmGroup.add(leftUpperArm);
-
-        const leftForearm = new THREE.Mesh(new THREE.CylinderGeometry(0.35, 0.35, 2), armMaterial);
-        leftForearm.position.set(-3, 3, 0);
-        leftForearm.rotation.z = -Math.PI / 4;
-        leftArmGroup.add(leftForearm);
-
-        robotGroup.add(leftArmGroup);
-
-        // Right arm
-        const rightArmGroup = new THREE.Group();
-        const rightUpperArm = new THREE.Mesh(new THREE.CylinderGeometry(0.4, 0.4, 2.5), armMaterial);
-        rightUpperArm.position.set(2.2, 5, 0);
-        rightUpperArm.rotation.z = -Math.PI / 6;
-        rightArmGroup.add(rightUpperArm);
-
-        const rightForearm = new THREE.Mesh(new THREE.CylinderGeometry(0.35, 0.35, 2), armMaterial);
-        rightForearm.position.set(3, 3, 0);
-        rightForearm.rotation.z = Math.PI / 4;
-        rightArmGroup.add(rightForearm);
-
-        robotGroup.add(rightArmGroup);
-
-        // Legs
-        const legMaterial = new THREE.MeshPhongMaterial({
-            color: 0x00F0FF,
-            emissive: 0x00F0FF,
-            emissiveIntensity: 0.2
-        });
-
-        const leftLeg = new THREE.Mesh(new THREE.CylinderGeometry(0.5, 0.4, 4), legMaterial);
-        leftLeg.position.set(-0.8, 0, 0);
-        robotGroup.add(leftLeg);
-
-        const rightLeg = new THREE.Mesh(new THREE.CylinderGeometry(0.5, 0.4, 4), legMaterial);
-        rightLeg.position.set(0.8, 0, 0);
-        robotGroup.add(rightLeg);
-
-        // Feet (small boxes)
-        const footMaterial = new THREE.MeshPhongMaterial({ color: 0x6B00FF });
-        const leftFoot = new THREE.Mesh(new THREE.BoxGeometry(0.8, 0.3, 1.2), footMaterial);
-        leftFoot.position.set(-0.8, -2, 0.3);
-        robotGroup.add(leftFoot);
-
-        const rightFoot = new THREE.Mesh(new THREE.BoxGeometry(0.8, 0.3, 1.2), footMaterial);
-        rightFoot.position.set(0.8, -2, 0.3);
-        robotGroup.add(rightFoot);
-
-        // Floating data rings around robot (subtle)
-        const ringGeometry = new THREE.TorusGeometry(5, 0.08, 16, 100);
-        const ringMaterial = new THREE.MeshBasicMaterial({
-            color: 0x00FF88,
+        // Inner energy sphere
+        const innerSphereGeometry = new THREE.SphereGeometry(1.7, 32, 32);
+        const innerSphereMaterial = new THREE.MeshBasicMaterial({
+            color: 0xCCCCCC,
             transparent: true,
-            opacity: 0.25
+            opacity: 0.3,
+            wireframe: true
+        });
+        const innerSphere = new THREE.Mesh(innerSphereGeometry, innerSphereMaterial);
+        ariaGroup.add(innerSphere);
+
+        // Outer orbital rings (3 rings)
+        const ringGeometry = new THREE.TorusGeometry(3, 0.05, 16, 100);
+        const ringMaterial = new THREE.MeshBasicMaterial({
+            color: 0xFFFFFF,
+            transparent: true,
+            opacity: 0.6
         });
 
         const ring1 = new THREE.Mesh(ringGeometry, ringMaterial);
         ring1.rotation.x = Math.PI / 2;
-        ring1.position.y = 6;
-        robotScene.add(ring1);
+        ariaGroup.add(ring1);
 
         const ring2 = new THREE.Mesh(ringGeometry, ringMaterial);
-        ring2.rotation.x = Math.PI / 2;
-        ring2.rotation.z = Math.PI / 4;
-        ring2.position.y = 3;
-        robotScene.add(ring2);
+        ring2.rotation.x = Math.PI / 3;
+        ring2.rotation.y = Math.PI / 4;
+        ariaGroup.add(ring2);
 
-        robotScene.add(robotGroup);
+        const ring3 = new THREE.Mesh(ringGeometry, ringMaterial);
+        ring3.rotation.x = -Math.PI / 3;
+        ring3.rotation.y = -Math.PI / 4;
+        ariaGroup.add(ring3);
+
+        // Floating data particles
+        const ariaParticleCount = 30;
+        const ariaParticleGeometry = new THREE.BufferGeometry();
+        const particlePositions = new Float32Array(ariaParticleCount * 3);
+        
+        for (let i = 0; i < ariaParticleCount * 3; i += 3) {
+            const angle = (i / 3 / ariaParticleCount) * Math.PI * 2;
+            const radius = 5 + Math.random() * 2;
+            particlePositions[i] = Math.cos(angle) * radius;
+            particlePositions[i + 1] = (Math.random() - 0.5) * 8;
+            particlePositions[i + 2] = Math.sin(angle) * radius;
+        }
+
+        ariaParticleGeometry.setAttribute('position', new THREE.BufferAttribute(particlePositions, 3));
+        const ariaParticleMaterial = new THREE.PointsMaterial({
+            color: 0xFFFFFF,
+            size: 0.15,
+            transparent: true,
+            opacity: 0.7
+        });
+        const ariaParticles = new THREE.Points(ariaParticleGeometry, ariaParticleMaterial);
+        robotScene.add(ariaParticles);
+
+        // Holographic panels
+        const panelGeometry = new THREE.PlaneGeometry(1.5, 1, 8, 8);
+        const panelMaterial = new THREE.MeshBasicMaterial({
+            color: 0xFFFFFF,
+            transparent: true,
+            opacity: 0.2,
+            wireframe: true,
+            side: THREE.DoubleSide
+        });
+
+        const panels = [];
+        for (let i = 0; i < 4; i++) {
+            const panel = new THREE.Mesh(panelGeometry, panelMaterial);
+            const angle = (i / 4) * Math.PI * 2;
+            panel.position.set(
+                Math.cos(angle) * 6,
+                Math.sin(i * 2) * 2,
+                Math.sin(angle) * 6
+            );
+            panel.lookAt(0, 0, 0);
+            panels.push(panel);
+            robotScene.add(panel);
+        }
+
+        robotScene.add(ariaGroup);
 
         // Lights
-        const robotLight1 = new THREE.PointLight(0x00F0FF, 2, 50);
-        robotLight1.position.set(10, 10, 10);
-        robotScene.add(robotLight1);
+        const mainLight = new THREE.PointLight(0xFFFFFF, 2, 50);
+        mainLight.position.set(10, 10, 10);
+        robotScene.add(mainLight);
 
-        const robotLight2 = new THREE.PointLight(0xFF00F0, 2, 50);
-        robotLight2.position.set(-10, -5, 10);
-        robotScene.add(robotLight2);
+        const fillLight = new THREE.PointLight(0xCCCCCC, 1, 50);
+        fillLight.position.set(-10, -5, 10);
+        robotScene.add(fillLight);
 
-        const ambientLight = new THREE.AmbientLight(0xffffff, 0.4);
+        const ambientLight = new THREE.AmbientLight(0xFFFFFF, 0.3);
         robotScene.add(ambientLight);
 
         // Animation
-        let robotTime = 0;
+        let ariaTime = 0;
         function animateRobot() {
             requestAnimationFrame(animateRobot);
-            robotTime += 0.008;
+            ariaTime += 0.008;
 
-            // Robot idle animation - very subtle
-            robotGroup.rotation.y = Math.sin(robotTime * 0.4) * 0.15;
-            head.rotation.y = Math.sin(robotTime * 0.6) * 0.1;
+            // Core gentle rotation and scale
+            ariaGroup.rotation.y += 0.005;
+            core.scale.set(
+                1 + Math.sin(ariaTime * 2) * 0.03,
+                1 + Math.sin(ariaTime * 2) * 0.03,
+                1 + Math.sin(ariaTime * 2) * 0.03
+            );
+
+            // Inner sphere counter-rotation
+            innerSphere.rotation.x += 0.01;
+            innerSphere.rotation.y -= 0.01;
+
+            // Orbital rings rotation
+            ring1.rotation.z += 0.01;
+            ring2.rotation.z -= 0.012;
+            ring3.rotation.z += 0.008;
+
+            // Particles orbital movement
+            ariaParticles.rotation.y += 0.003;
             
-            // Breathing effect - minimal
-            robotGroup.scale.y = 1 + Math.sin(robotTime * 1.5) * 0.015;
+            // Panels floating
+            panels.forEach((panel, i) => {
+                panel.position.y += Math.sin(ariaTime + i) * 0.01;
+                panel.material.opacity = 0.15 + Math.sin(ariaTime * 2 + i) * 0.1;
+            });
 
-            // Arms gentle movement
-            leftUpperArm.rotation.z = Math.PI / 6 + Math.sin(robotTime * 1.2) * 0.08;
-            rightUpperArm.rotation.z = -Math.PI / 6 - Math.sin(robotTime * 1.2) * 0.08;
-            leftForearm.rotation.z = -Math.PI / 4 + Math.sin(robotTime * 1.5) * 0.1;
-            rightForearm.rotation.z = Math.PI / 4 - Math.sin(robotTime * 1.5) * 0.1;
-
-            // Visor glow - subtle
-            visor.material.opacity = 0.8 + Math.sin(robotTime * 2) * 0.15;
-            core.material.opacity = 0.7 + Math.sin(robotTime * 1.8) * 0.15;
-
-            // Rings rotation - slow
-            ring1.rotation.z += 0.008;
-            ring2.rotation.z -= 0.01;
+            // Core pulsing glow
+            core.material.emissiveIntensity = 0.3 + Math.sin(ariaTime * 3) * 0.15;
 
             robotRenderer.render(robotScene, robotCamera);
         }
         animateRobot();
+
 
         // ========================================
         // Resize Handler
@@ -2271,6 +2234,586 @@
             robotRenderer.setSize(robotCanvas.clientWidth, robotCanvas.clientHeight);
             robotCamera.aspect = robotCanvas.clientWidth / robotCanvas.clientHeight;
             robotCamera.updateProjectionMatrix();
+        });
+    </script>
+    <!-- ARIA Chat Interface -->
+    <div class="aria-chat-container" id="ariaChat">
+        <div class="aria-chat-button" id="ariaChatBtn">
+            <div class="aria-pulse"></div>
+            <div class="aria-icon">🤖</div>
+            <div class="aria-label">NAINA</div>
+        </div>
+
+        <div class="aria-chat-window" id="ariaChatWindow">
+            <div class="aria-chat-header">
+                <div class="aria-header-info">
+                    <div class="aria-avatar">🤖</div>
+                    <div>
+                        <div class="aria-name">NAINA</div>
+                        <div class="aria-status">
+                            <span class="aria-status-dot"></span>
+                            AI Assistant • Online
+                        </div>
+                    </div>
+                </div>
+                <button class="aria-close" id="ariaClose">✕</button>
+            </div>
+
+            <div class="aria-quick-actions">
+                <button class="aria-quick-btn" data-question="Tell me about Sanjna's journey">
+                    🌟 Her Journey
+                </button>
+                <button class="aria-quick-btn" data-question="What makes Sanjna unique?">
+                    💎 What's Unique
+                </button>
+                <button class="aria-quick-btn" data-question="Tell me about her projects">
+                    🚀 Projects
+                </button>
+                <button class="aria-quick-btn" data-question="What are her technical skills?">
+                    🛠️ Skills
+                </button>
+            </div>
+
+            <div class="aria-messages" id="ariaMessages">
+                <div class="aria-message aria-bot">
+                    <div class="aria-message-avatar">🤖</div>
+                    <div class="aria-message-content">
+                        <div class="aria-message-text">
+                            Hi! I'm ARIA, Sanjna's AI assistant. I know everything about her journey from being the first in her family to pursue tech, to building cutting-edge AI systems. How can I help you today?
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="aria-input-container">
+                <input 
+                    type="text" 
+                    class="aria-input" 
+                    id="ariaInput" 
+                    placeholder="Ask me about Sanjna..."
+                    autocomplete="off"
+                />
+                <button class="aria-send" id="ariaSend">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        /* ARIA Chat Styles */
+        .aria-chat-container {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            z-index: 1000;
+        }
+
+        .aria-chat-button {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            background: var(--pure-white);
+            color: var(--void-black);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 40px rgba(255, 255, 255, 0.3);
+            position: relative;
+        }
+
+        .aria-pulse {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            border: 2px solid var(--pure-white);
+            animation: ariaPulse 2s ease-out infinite;
+        }
+
+        @keyframes ariaPulse {
+            0% {
+                transform: scale(1);
+                opacity: 1;
+            }
+            100% {
+                transform: scale(1.5);
+                opacity: 0;
+            }
+        }
+
+        .aria-icon {
+            font-size: 2rem;
+            margin-bottom: 0.2rem;
+        }
+
+        .aria-label {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+        }
+
+        .aria-chat-button:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 50px rgba(255, 255, 255, 0.5);
+        }
+
+        .aria-chat-window {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            width: 400px;
+            height: 600px;
+            background: rgba(0, 0, 0, 0.95);
+            border: 2px solid var(--pure-white);
+            border-radius: 20px;
+            display: none;
+            flex-direction: column;
+            backdrop-filter: blur(20px);
+            box-shadow: 0 20px 60px rgba(255, 255, 255, 0.2);
+            animation: ariaSlideIn 0.3s ease-out;
+        }
+
+        .aria-chat-window.active {
+            display: flex;
+        }
+
+        @keyframes ariaSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px) scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .aria-chat-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .aria-header-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .aria-avatar {
+            font-size: 2rem;
+        }
+
+        .aria-name {
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: var(--pure-white);
+        }
+
+        .aria-status {
+            font-size: 0.8rem;
+            color: var(--light-gray);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .aria-status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--pure-white);
+            animation: ariaBlink 2s ease-in-out infinite;
+        }
+
+        @keyframes ariaBlink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
+        }
+
+        .aria-close {
+            background: none;
+            border: none;
+            color: var(--light-gray);
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: color 0.3s ease;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .aria-close:hover {
+            color: var(--pure-white);
+        }
+
+        .aria-quick-actions {
+            padding: 1rem;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0.75rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .aria-quick-btn {
+            padding: 0.75rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            color: var(--light-gray);
+            font-family: 'Space Mono', monospace;
+            font-size: 0.75rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: left;
+        }
+
+        .aria-quick-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: var(--pure-white);
+            color: var(--pure-white);
+            transform: translateY(-2px);
+        }
+
+        .aria-messages {
+            flex: 1;
+            padding: 1.5rem;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .aria-messages::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .aria-messages::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .aria-messages::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 3px;
+        }
+
+        .aria-message {
+            display: flex;
+            gap: 0.75rem;
+            animation: ariaMessageIn 0.3s ease-out;
+        }
+
+        @keyframes ariaMessageIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .aria-message.aria-user {
+            flex-direction: row-reverse;
+        }
+
+        .aria-message-avatar {
+            font-size: 1.5rem;
+            flex-shrink: 0;
+        }
+
+        .aria-message-content {
+            flex: 1;
+        }
+
+        .aria-message-text {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 1rem;
+            border-radius: 15px;
+            color: white;
+            line-height: 1.6;
+            font-size: 0.95rem;
+        }
+
+        .aria-message.aria-user .aria-message-text {
+            background: var(--pure-white);
+            color: var(--void-black);
+        }
+
+        .aria-typing {
+            display: flex;
+            gap: 0.5rem;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            width: fit-content;
+        }
+
+        .aria-typing-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--light-gray);
+            animation: ariaTyping 1.4s ease-in-out infinite;
+        }
+
+        .aria-typing-dot:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .aria-typing-dot:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+
+        @keyframes ariaTyping {
+            0%, 60%, 100% {
+                transform: translateY(0);
+            }
+            30% {
+                transform: translateY(-10px);
+            }
+        }
+
+        .aria-input-container {
+            padding: 1rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            gap: 0.75rem;
+        }
+
+        .aria-input {
+            flex: 1;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 25px;
+            padding: 0.75rem 1.25rem;
+            color: white;
+            font-family: 'Space Mono', monospace;
+            font-size: 0.9rem;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        .aria-input::placeholder {
+            color: var(--medium-gray);
+        }
+
+        .aria-input:focus {
+            border-color: var(--pure-white);
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .aria-send {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background: var(--pure-white);
+            color: var(--void-black);
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .aria-send:hover {
+            transform: scale(1.1);
+            box-shadow: 0 5px 20px rgba(255, 255, 255, 0.4);
+        }
+
+        .aria-send:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        @media (max-width: 768px) {
+            .aria-chat-window {
+                width: calc(100vw - 2rem);
+                height: calc(100vh - 2rem);
+                bottom: 1rem;
+                right: 1rem;
+            }
+
+            .aria-quick-actions {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+
+    <script>
+        // ====================
+        // ARIA Chat Functionality
+        // ====================
+        const ariaChatBtn = document.getElementById('ariaChatBtn');
+        const ariaChatWindow = document.getElementById('ariaChatWindow');
+        const ariaClose = document.getElementById('ariaClose');
+        const ariaInput = document.getElementById('ariaInput');
+        const ariaSend = document.getElementById('ariaSend');
+        const ariaMessages = document.getElementById('ariaMessages');
+        const ariaQuickBtns = document.querySelectorAll('.aria-quick-btn');
+
+        // Toggle chat window
+        ariaChatBtn.addEventListener('click', () => {
+            ariaChatWindow.classList.add('active');
+            ariaChatBtn.style.display = 'none';
+        });
+
+        ariaClose.addEventListener('click', () => {
+            ariaChatWindow.classList.remove('active');
+            ariaChatBtn.style.display = 'flex';
+        });
+
+        // ARIA's knowledge base about Sanjna
+        const ariaKnowledge = {
+            journey: "Sanjna's journey is truly inspiring! She started in 12th grade knowing absolutely nothing about technology - she was the first person in her entire family to pursue science and technology. From that humble beginning, she taught herself coding, mastered data structures and algorithms, and progressively built expertise in machine learning, deep learning, and now cutting-edge AI systems. Her journey spans from 2022 foundations to 2025 where she's working on federated learning, multimodal AI, and production-scale RAG systems.",
+            
+            unique: "What makes Sanjna unique is her combination of: (1) Being a true pioneer - first in her family in tech (2) Rapid skill progression - from zero to building production AI systems in just 3 years (3) Real-world impact - her CSIR work is still in production, saving 70% time (4) Winning hackathons and national competitions (Top 10% in F1-Plaksha) (5) Leadership - training 50+ juniors and coordinating tech events (6) Complete self-taught journey demonstrating extraordinary resilience and determination.",
+            
+            projects: "Sanjna has built impressive production-scale projects: **CSIR-CSIO RAG System** (70% efficiency gain, still in production), **Federated Brain Tumor Detection** (privacy-preserving healthcare AI), **F1 Dynamic Visual Audit** (Top 10% nationwide selection), **Deepfake Detection** (1st place hackathon winner with bias mitigation), **Multimodal Medical Assistant** (Google Kaggle swag recipient), **Aegis AI Studio** (complete local AI platform with 6 HuggingFace models), and **askLLM** (enterprise document analysis with sub-3 second response times).",
+            
+            skills: "Sanjna's technical stack includes: **Languages**: Python, C++, HTML, CSS, SQL, Data Structures & Algorithms. **Frameworks**: PyTorch, TensorFlow, Scikit-Learn, RAG, Agentic Workflows, Multimodal AI, LLM Fine-tuning. **Specializations**: NLP, Computer Vision, Federated Learning, Machine Learning. **Infrastructure**: FAISS, ChromaDB, Docker, Git/GitHub, FastAPI, Streamlit. **Cloud**: Colab, Kaggle. **Tools**: Jupyter, VS Code, HuggingFace, Gemini models.",
+            
+            csir: "At CSIR-CSIO (India's premier scientific institution), Sanjna developed an AI-powered query agent for the Material Science Research Department. Using RAG pipelines with BERT, LangChain, FAISS, and Gemini models, she reduced research document processing time from 10 minutes to 3 minutes - a 70% efficiency improvement. The system is still in production, processing 66+ PDFs and images.",
+            
+            hackathons: "Sanjna has won multiple hackathons! She led her team to 1st place at GNA University Hackathon building a deepfake detection system with bias mitigation. She also earned Google Kaggle swag for her multimodal chest X-ray medical assistant. Most notably, she was selected for the Top 10% nationwide (Team A.P.E.X) in the Plaksha University x F1 Haas Team collaboration.",
+            
+            leadership: "Sanjna is a natural leader and community builder! She's conducted coding training for 50+ juniors at GNA University, coordinated multiple technical events and hackathons, is a proud member of BRS Alumni by Dr. Kiran Bedi (India's first IPS officer), and was selected as a Viksit Bharat Ambassador by PMO India after clearing a national quiz. She's also an active open-source contributor.",
+            
+            contact: "You can reach Sanjna at: **Email**: sanjnabali8@gmail.com, **GitHub**: github.com/sanjnabali, **LinkedIn**: linkedin.com/in/sanjnabali, **Kaggle**: kaggle.com/sanjnabali. She's open to opportunities in AI/ML engineering, research positions, and collaborations on cutting-edge AI projects!"
+        };
+
+        // Simple pattern matching for responses
+        function getAriaResponse(question) {
+            question = question.toLowerCase();
+            
+            if (question.includes('journey') || question.includes('story') || question.includes('background') || question.includes('started')) {
+                return ariaKnowledge.journey;
+            }
+            else if (question.includes('unique') || question.includes('different') || question.includes('special') || question.includes('stand out')) {
+                return ariaKnowledge.unique;
+            }
+            else if (question.includes('project') || question.includes('built') || question.includes('work')) {
+                return ariaKnowledge.projects;
+            }
+            else if (question.includes('skill') || question.includes('technical') || question.includes('technology') || question.includes('stack')) {
+                return ariaKnowledge.skills;
+            }
+            else if (question.includes('csir') || question.includes('internship') || question.includes('research')) {
+                return ariaKnowledge.csir;
+            }
+            else if (question.includes('hackathon') || question.includes('competition') || question.includes('win') || question.includes('award')) {
+                return ariaKnowledge.hackathons;
+            }
+            else if (question.includes('leadership') || question.includes('mentor') || question.includes('community') || question.includes('training')) {
+                return ariaKnowledge.leadership;
+            }
+            else if (question.includes('contact') || question.includes('email') || question.includes('reach') || question.includes('hire') || question.includes('connect')) {
+                return ariaKnowledge.contact;
+            }
+            else if (question.includes('hello') || question.includes('hi') || question.includes('hey')) {
+                return "Hello! I'm ARIA, Sanjna's AI assistant. I can tell you about her incredible journey from zero tech knowledge to building production AI systems, her impressive projects, technical skills, leadership experience, and how to get in touch with her. What would you like to know?";
+            }
+            else if (question.includes('who are you') || question.includes('what are you') || question.includes('aria')) {
+                return "I'm ARIA (AI Research Interactive Assistant) - Sanjna's personal AI assistant! I was built to showcase her AI engineering skills and help people learn about her journey, projects, and expertise. Think of me as an interactive portfolio that can answer your questions!";
+            }
+            else {
+                return "That's an interesting question! While I know a lot about Sanjna, I'm specifically trained on her journey, projects, skills, and achievements. Try asking me about her background, projects she's built, her technical skills, leadership experience, or how to contact her!";
+            }
+        }
+
+        // Add message to chat
+        function addMessage(text, isUser = false) {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `aria-message ${isUser ? 'aria-user' : 'aria-bot'}`;
+            
+            messageDiv.innerHTML = `
+                <div class="aria-message-avatar">${isUser ? '👤' : '🤖'}</div>
+                <div class="aria-message-content">
+                    <div class="aria-message-text">${text}</div>
+                </div>
+            `;
+            
+            ariaMessages.appendChild(messageDiv);
+            ariaMessages.scrollTop = ariaMessages.scrollHeight;
+        }
+
+        // Show typing indicator
+        function showTyping() {
+            const typingDiv = document.createElement('div');
+            typingDiv.className = 'aria-message aria-bot';
+            typingDiv.id = 'typing-indicator';
+            
+            typingDiv.innerHTML = `
+                <div class="aria-message-avatar">🤖</div>
+                <div class="aria-message-content">
+                    <div class="aria-typing">
+                        <div class="aria-typing-dot"></div>
+                        <div class="aria-typing-dot"></div>
+                        <div class="aria-typing-dot"></div>
+                    </div>
+                </div>
+            `;
+            
+            ariaMessages.appendChild(typingDiv);
+            ariaMessages.scrollTop = ariaMessages.scrollHeight;
+        }
+
+        // Remove typing indicator
+        function removeTyping() {
+            const typing = document.getElementById('typing-indicator');
+            if (typing) typing.remove();
+        }
+
+        // Handle sending message
+        function sendMessage() {
+            const question = ariaInput.value.trim();
+            if (!question) return;
+            
+            // Add user message
+            addMessage(question, true);
+            ariaInput.value = '';
+            
+            // Show typing
+            showTyping();
+            
+            // Simulate thinking time (500-1500ms)
+            setTimeout(() => {
+                removeTyping();
+                const response = getAriaResponse(question);
+                addMessage(response);
+            }, 800 + Math.random() * 700);
+        }
+
+        // Event listeners
+        ariaSend.addEventListener('click', sendMessage);
+        
+        ariaInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                sendMessage();
+            }
+        });
+
+        // Quick action buttons
+        ariaQuickBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const question = btn.getAttribute('data-question');
+                ariaInput.value = question;
+                sendMessage();
+            });
         });
     </script>
 </body>
