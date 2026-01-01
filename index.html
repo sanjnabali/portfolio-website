@@ -1280,7 +1280,7 @@
                         <div class="timeline-tags">
                             <span class="timeline-tag">RAG</span>
                             <span class="timeline-tag">BERT</span>
-                            <span class="timeline-tag">Python</span>
+                            <span class="timeline-tag">LangChain</span>
                             <span class="timeline-tag">FAISS</span>
                             <span class="timeline-tag">Gemini API</span>
                             <span class="timeline-tag">Scientific Computing</span>
@@ -1586,7 +1586,7 @@
                         <span class="tech-tag">FastAPI</span>
                         <span class="tech-tag">Python</span>
                         <span class="tech-tag">Docker</span>
-                        <span class="tech-tag">RAG</span>
+                        <span class="tech-tag">PostgreSQL</span>
                         <span class="tech-tag">ChromaDB</span>
                     </div>
                     <div class="performance-card">
@@ -1608,7 +1608,9 @@
                         Transformed research workflows by developing an automated RAG pipeline that revolutionized document processing efficiency at India's premier scientific institution.
                     </p>
                     <div class="tech-stack">
-                        <span class="tech-tag">LangChain</span>
+                        <span class="tech-tag">LLMs</span>
+                        <span class="tech-tag">RAG</span>
+                        <span class="tech-tag">Fine-tuning</span>
                         <span class="tech-tag">FAISS</span>
                         <span class="tech-tag">BERT</span>
                         <span class="tech-tag">Gemini API</span>
@@ -2062,7 +2064,7 @@
 
         // ========================================
         // ========================================
-        // ARIA - Realistic AI Assistant (Sleek Holographic Design)
+        // ARIA - Realistic Humanoid Robot Model
         // ========================================
         const robotCanvas = document.getElementById('robot-canvas');
         const robotRenderer = new THREE.WebGLRenderer({ canvas: robotCanvas, alpha: true, antialias: true });
@@ -2071,116 +2073,283 @@
 
         const robotScene = new THREE.Scene();
         const robotCamera = new THREE.PerspectiveCamera(50, robotCanvas.clientWidth / robotCanvas.clientHeight, 0.1, 1000);
-        robotCamera.position.set(0, 0, 15);
+        robotCamera.position.set(0, 3, 12);
+        robotCamera.lookAt(0, 2, 0);
 
-        // Create ARIA - Sleek AI Assistant
-        const ariaGroup = new THREE.Group();
+        // Create ARIA - Realistic Humanoid Robot
+        const ariaRobot = new THREE.Group();
 
-        // Core sphere (AI brain)
-        const coreGeometry = new THREE.SphereGeometry(2, 64, 64);
-        const coreMaterial = new THREE.MeshPhongMaterial({
+        // Materials
+        const bodyMaterial = new THREE.MeshPhongMaterial({
             color: 0xFFFFFF,
-            emissive: 0xFFFFFF,
-            emissiveIntensity: 0.4,
+            emissive: 0xCCCCCC,
+            emissiveIntensity: 0.2,
             shininess: 100,
+            specular: 0x888888
+        });
+
+        const jointMaterial = new THREE.MeshPhongMaterial({
+            color: 0x888888,
+            emissive: 0x666666,
+            emissiveIntensity: 0.1,
+            shininess: 80
+        });
+
+        const glowMaterial = new THREE.MeshBasicMaterial({
+            color: 0xFFFFFF,
             transparent: true,
             opacity: 0.9
         });
-        const core = new THREE.Mesh(coreGeometry, coreMaterial);
-        ariaGroup.add(core);
 
-        // Inner energy sphere
-        const innerSphereGeometry = new THREE.SphereGeometry(1.7, 32, 32);
-        const innerSphereMaterial = new THREE.MeshBasicMaterial({
-            color: 0xCCCCCC,
-            transparent: true,
-            opacity: 0.3,
-            wireframe: true
-        });
-        const innerSphere = new THREE.Mesh(innerSphereGeometry, innerSphereMaterial);
-        ariaGroup.add(innerSphere);
+        // HEAD - Futuristic helmet design
+        const headGroup = new THREE.Group();
+        
+        // Main head sphere
+        const headGeo = new THREE.SphereGeometry(0.8, 32, 32, 0, Math.PI * 2, 0, Math.PI * 0.85);
+        const head = new THREE.Mesh(headGeo, bodyMaterial);
+        head.position.y = 4.5;
+        headGroup.add(head);
 
-        // Outer orbital rings (3 rings)
-        const ringGeometry = new THREE.TorusGeometry(3, 0.05, 16, 100);
-        const ringMaterial = new THREE.MeshBasicMaterial({
+        // Face plate
+        const facePlateGeo = new THREE.BoxGeometry(1.2, 0.6, 0.1);
+        const facePlate = new THREE.Mesh(facePlateGeo, glowMaterial);
+        facePlate.position.set(0, 4.5, 0.7);
+        headGroup.add(facePlate);
+
+        // Eyes
+        const eyeGeo = new THREE.SphereGeometry(0.12, 16, 16);
+        const leftEye = new THREE.Mesh(eyeGeo, glowMaterial);
+        leftEye.position.set(-0.25, 4.5, 0.75);
+        headGroup.add(leftEye);
+        
+        const rightEye = new THREE.Mesh(eyeGeo, glowMaterial);
+        rightEye.position.set(0.25, 4.5, 0.75);
+        headGroup.add(rightEye);
+
+        // Antenna
+        const antennaGeo = new THREE.CylinderGeometry(0.03, 0.03, 0.6);
+        const antenna = new THREE.Mesh(antennaGeo, jointMaterial);
+        antenna.position.set(0, 5.1, 0);
+        headGroup.add(antenna);
+
+        const antennaTipGeo = new THREE.SphereGeometry(0.08, 16, 16);
+        const antennaTip = new THREE.Mesh(antennaTipGeo, glowMaterial);
+        antennaTip.position.set(0, 5.4, 0);
+        headGroup.add(antennaTip);
+
+        ariaRobot.add(headGroup);
+
+        // NECK
+        const neckGeo = new THREE.CylinderGeometry(0.25, 0.3, 0.5, 16);
+        const neck = new THREE.Mesh(neckGeo, jointMaterial);
+        neck.position.y = 3.9;
+        ariaRobot.add(neck);
+
+        // TORSO - Detailed chassis
+        const torsoGeo = new THREE.BoxGeometry(1.8, 2, 1);
+        const torso = new THREE.Mesh(torsoGeo, bodyMaterial);
+        torso.position.y = 2.5;
+        ariaRobot.add(torso);
+
+        // Chest reactor/core
+        const coreGeo = new THREE.SphereGeometry(0.4, 32, 32);
+        const core = new THREE.Mesh(coreGeo, glowMaterial);
+        core.position.set(0, 2.7, 0.52);
+        ariaRobot.add(core);
+
+        // Core ring
+        const coreRingGeo = new THREE.TorusGeometry(0.45, 0.05, 16, 32);
+        const coreRing = new THREE.Mesh(coreRingGeo, jointMaterial);
+        coreRing.position.set(0, 2.7, 0.52);
+        coreRing.rotation.x = Math.PI / 2;
+        ariaRobot.add(coreRing);
+
+        // Shoulder panels
+        const shoulderGeo = new THREE.BoxGeometry(0.6, 0.5, 0.6);
+        const leftShoulder = new THREE.Mesh(shoulderGeo, bodyMaterial);
+        leftShoulder.position.set(-1.2, 3.3, 0);
+        ariaRobot.add(leftShoulder);
+
+        const rightShoulder = new THREE.Mesh(shoulderGeo, bodyMaterial);
+        rightShoulder.position.set(1.2, 3.3, 0);
+        ariaRobot.add(rightShoulder);
+
+        // ARMS
+        // Left arm
+        const leftArmGroup = new THREE.Group();
+        
+        // Upper arm
+        const upperArmGeo = new THREE.CylinderGeometry(0.2, 0.18, 1.2, 16);
+        const leftUpperArm = new THREE.Mesh(upperArmGeo, bodyMaterial);
+        leftUpperArm.position.set(-1.2, 2.5, 0);
+        leftArmGroup.add(leftUpperArm);
+
+        // Elbow joint
+        const elbowGeo = new THREE.SphereGeometry(0.22, 16, 16);
+        const leftElbow = new THREE.Mesh(elbowGeo, jointMaterial);
+        leftElbow.position.set(-1.2, 1.9, 0);
+        leftArmGroup.add(leftElbow);
+
+        // Forearm
+        const forearmGeo = new THREE.CylinderGeometry(0.18, 0.16, 1.2, 16);
+        const leftForearm = new THREE.Mesh(forearmGeo, bodyMaterial);
+        leftForearm.position.set(-1.2, 1.2, 0);
+        leftArmGroup.add(leftForearm);
+
+        // Hand
+        const handGeo = new THREE.BoxGeometry(0.25, 0.35, 0.15);
+        const leftHand = new THREE.Mesh(handGeo, jointMaterial);
+        leftHand.position.set(-1.2, 0.5, 0);
+        leftArmGroup.add(leftHand);
+
+        ariaRobot.add(leftArmGroup);
+
+        // Right arm (mirror of left)
+        const rightArmGroup = new THREE.Group();
+        
+        const rightUpperArm = new THREE.Mesh(upperArmGeo, bodyMaterial);
+        rightUpperArm.position.set(1.2, 2.5, 0);
+        rightArmGroup.add(rightUpperArm);
+
+        const rightElbow = new THREE.Mesh(elbowGeo, jointMaterial);
+        rightElbow.position.set(1.2, 1.9, 0);
+        rightArmGroup.add(rightElbow);
+
+        const rightForearm = new THREE.Mesh(forearmGeo, bodyMaterial);
+        rightForearm.position.set(1.2, 1.2, 0);
+        rightArmGroup.add(rightForearm);
+
+        const rightHand = new THREE.Mesh(handGeo, jointMaterial);
+        rightHand.position.set(1.2, 0.5, 0);
+        rightArmGroup.add(rightHand);
+
+        ariaRobot.add(rightArmGroup);
+
+        // WAIST
+        const waistGeo = new THREE.CylinderGeometry(0.6, 0.7, 0.4, 16);
+        const waist = new THREE.Mesh(waistGeo, jointMaterial);
+        waist.position.y = 1.3;
+        ariaRobot.add(waist);
+
+        // LEGS
+        // Left leg
+        const leftLegGroup = new THREE.Group();
+        
+        // Thigh
+        const thighGeo = new THREE.CylinderGeometry(0.28, 0.25, 1.2, 16);
+        const leftThigh = new THREE.Mesh(thighGeo, bodyMaterial);
+        leftThigh.position.set(-0.4, 0.5, 0);
+        leftLegGroup.add(leftThigh);
+
+        // Knee
+        const kneeGeo = new THREE.SphereGeometry(0.26, 16, 16);
+        const leftKnee = new THREE.Mesh(kneeGeo, jointMaterial);
+        leftKnee.position.set(-0.4, -0.1, 0);
+        leftLegGroup.add(leftKnee);
+
+        // Shin
+        const shinGeo = new THREE.CylinderGeometry(0.24, 0.22, 1.2, 16);
+        const leftShin = new THREE.Mesh(shinGeo, bodyMaterial);
+        leftShin.position.set(-0.4, -0.8, 0);
+        leftLegGroup.add(leftShin);
+
+        // Ankle
+        const ankleGeo = new THREE.SphereGeometry(0.22, 16, 16);
+        const leftAnkle = new THREE.Mesh(ankleGeo, jointMaterial);
+        leftAnkle.position.set(-0.4, -1.4, 0);
+        leftLegGroup.add(leftAnkle);
+
+        // Foot
+        const footGeo = new THREE.BoxGeometry(0.35, 0.2, 0.6);
+        const leftFoot = new THREE.Mesh(footGeo, bodyMaterial);
+        leftFoot.position.set(-0.4, -1.6, 0.1);
+        leftLegGroup.add(leftFoot);
+
+        ariaRobot.add(leftLegGroup);
+
+        // Right leg (mirror of left)
+        const rightLegGroup = new THREE.Group();
+        
+        const rightThigh = new THREE.Mesh(thighGeo, bodyMaterial);
+        rightThigh.position.set(0.4, 0.5, 0);
+        rightLegGroup.add(rightThigh);
+
+        const rightKnee = new THREE.Mesh(kneeGeo, jointMaterial);
+        rightKnee.position.set(0.4, -0.1, 0);
+        rightLegGroup.add(rightKnee);
+
+        const rightShin = new THREE.Mesh(shinGeo, bodyMaterial);
+        rightShin.position.set(0.4, -0.8, 0);
+        rightLegGroup.add(rightShin);
+
+        const rightAnkle = new THREE.Mesh(ankleGeo, jointMaterial);
+        rightAnkle.position.set(0.4, -1.4, 0);
+        rightLegGroup.add(rightAnkle);
+
+        const rightFoot = new THREE.Mesh(footGeo, bodyMaterial);
+        rightFoot.position.set(0.4, -1.6, 0.1);
+        rightLegGroup.add(rightFoot);
+
+        ariaRobot.add(rightLegGroup);
+
+        // Floating holographic data rings
+        const ringGeo = new THREE.TorusGeometry(3, 0.04, 16, 64);
+        const ringMat = new THREE.MeshBasicMaterial({
             color: 0xFFFFFF,
             transparent: true,
-            opacity: 0.6
+            opacity: 0.3
         });
 
-        const ring1 = new THREE.Mesh(ringGeometry, ringMaterial);
-        ring1.rotation.x = Math.PI / 2;
-        ariaGroup.add(ring1);
+        const haloRing1 = new THREE.Mesh(ringGeo, ringMat);
+        haloRing1.rotation.x = Math.PI / 2;
+        haloRing1.position.y = 3;
+        robotScene.add(haloRing1);
 
-        const ring2 = new THREE.Mesh(ringGeometry, ringMaterial);
-        ring2.rotation.x = Math.PI / 3;
-        ring2.rotation.y = Math.PI / 4;
-        ariaGroup.add(ring2);
+        const haloRing2 = new THREE.Mesh(ringGeo, ringMat);
+        haloRing2.rotation.x = Math.PI / 2;
+        haloRing2.rotation.z = Math.PI / 3;
+        haloRing2.position.y = 1.5;
+        robotScene.add(haloRing2);
 
-        const ring3 = new THREE.Mesh(ringGeometry, ringMaterial);
-        ring3.rotation.x = -Math.PI / 3;
-        ring3.rotation.y = -Math.PI / 4;
-        ariaGroup.add(ring3);
+        robotScene.add(ariaRobot);
 
-        // Floating data particles
-        const ariaParticleCount = 30;
+        // Floating data particles around ARIA
+        const ariaParticleCount = 40;
         const ariaParticleGeometry = new THREE.BufferGeometry();
         const particlePositions = new Float32Array(ariaParticleCount * 3);
         
         for (let i = 0; i < ariaParticleCount * 3; i += 3) {
             const angle = (i / 3 / ariaParticleCount) * Math.PI * 2;
-            const radius = 5 + Math.random() * 2;
+            const radius = 4 + Math.random() * 2;
             particlePositions[i] = Math.cos(angle) * radius;
-            particlePositions[i + 1] = (Math.random() - 0.5) * 8;
+            particlePositions[i + 1] = (Math.random() - 0.5) * 6 + 2;
             particlePositions[i + 2] = Math.sin(angle) * radius;
         }
 
         ariaParticleGeometry.setAttribute('position', new THREE.BufferAttribute(particlePositions, 3));
         const ariaParticleMaterial = new THREE.PointsMaterial({
             color: 0xFFFFFF,
-            size: 0.15,
+            size: 0.1,
             transparent: true,
-            opacity: 0.7
+            opacity: 0.6
         });
         const ariaParticles = new THREE.Points(ariaParticleGeometry, ariaParticleMaterial);
         robotScene.add(ariaParticles);
 
-        // Holographic panels
-        const panelGeometry = new THREE.PlaneGeometry(1.5, 1, 8, 8);
-        const panelMaterial = new THREE.MeshBasicMaterial({
-            color: 0xFFFFFF,
-            transparent: true,
-            opacity: 0.2,
-            wireframe: true,
-            side: THREE.DoubleSide
-        });
+        // Lights for realistic rendering
+        const keyLight = new THREE.DirectionalLight(0xFFFFFF, 1);
+        keyLight.position.set(5, 10, 5);
+        robotScene.add(keyLight);
 
-        const panels = [];
-        for (let i = 0; i < 4; i++) {
-            const panel = new THREE.Mesh(panelGeometry, panelMaterial);
-            const angle = (i / 4) * Math.PI * 2;
-            panel.position.set(
-                Math.cos(angle) * 6,
-                Math.sin(i * 2) * 2,
-                Math.sin(angle) * 6
-            );
-            panel.lookAt(0, 0, 0);
-            panels.push(panel);
-            robotScene.add(panel);
-        }
-
-        robotScene.add(ariaGroup);
-
-        // Lights
-        const mainLight = new THREE.PointLight(0xFFFFFF, 2, 50);
-        mainLight.position.set(10, 10, 10);
-        robotScene.add(mainLight);
-
-        const fillLight = new THREE.PointLight(0xCCCCCC, 1, 50);
-        fillLight.position.set(-10, -5, 10);
+        const fillLight = new THREE.DirectionalLight(0xCCCCCC, 0.5);
+        fillLight.position.set(-5, 5, -5);
         robotScene.add(fillLight);
 
-        const ambientLight = new THREE.AmbientLight(0xFFFFFF, 0.3);
+        const backLight = new THREE.DirectionalLight(0x888888, 0.3);
+        backLight.position.set(0, 5, -5);
+        robotScene.add(backLight);
+
+        const ambientLight = new THREE.AmbientLight(0xFFFFFF, 0.4);
         robotScene.add(ambientLight);
 
         // Animation
@@ -2189,34 +2358,46 @@
             requestAnimationFrame(animateRobot);
             ariaTime += 0.008;
 
-            // Core gentle rotation and scale
-            ariaGroup.rotation.y += 0.005;
+            // Gentle robot rotation
+            ariaRobot.rotation.y = Math.sin(ariaTime * 0.3) * 0.2;
+
+            // Head movement
+            headGroup.rotation.y = Math.sin(ariaTime * 0.5) * 0.15;
+            headGroup.rotation.x = Math.sin(ariaTime * 0.3) * 0.05;
+
+            // Breathing effect on torso
+            torso.scale.y = 1 + Math.sin(ariaTime * 1.5) * 0.02;
+
+            // Arm animations - natural idle movement
+            leftArmGroup.rotation.x = Math.sin(ariaTime * 0.8) * 0.1;
+            rightArmGroup.rotation.x = Math.sin(ariaTime * 0.8 + Math.PI) * 0.1;
+
+            // Core glow pulsing
+            core.material.opacity = 0.8 + Math.sin(ariaTime * 2) * 0.15;
             core.scale.set(
-                1 + Math.sin(ariaTime * 2) * 0.03,
-                1 + Math.sin(ariaTime * 2) * 0.03,
-                1 + Math.sin(ariaTime * 2) * 0.03
+                1 + Math.sin(ariaTime * 2) * 0.05,
+                1 + Math.sin(ariaTime * 2) * 0.05,
+                1 + Math.sin(ariaTime * 2) * 0.05
             );
 
-            // Inner sphere counter-rotation
-            innerSphere.rotation.x += 0.01;
-            innerSphere.rotation.y -= 0.01;
+            // Eyes blinking
+            if (Math.random() > 0.98) {
+                leftEye.scale.y = 0.1;
+                rightEye.scale.y = 0.1;
+            } else {
+                leftEye.scale.y = 1;
+                rightEye.scale.y = 1;
+            }
 
-            // Orbital rings rotation
-            ring1.rotation.z += 0.01;
-            ring2.rotation.z -= 0.012;
-            ring3.rotation.z += 0.008;
+            // Antenna tip glow
+            antennaTip.material.opacity = 0.7 + Math.sin(ariaTime * 3) * 0.3;
+
+            // Halo rings rotation
+            haloRing1.rotation.z += 0.005;
+            haloRing2.rotation.z -= 0.007;
 
             // Particles orbital movement
             ariaParticles.rotation.y += 0.003;
-            
-            // Panels floating
-            panels.forEach((panel, i) => {
-                panel.position.y += Math.sin(ariaTime + i) * 0.01;
-                panel.material.opacity = 0.15 + Math.sin(ariaTime * 2 + i) * 0.1;
-            });
-
-            // Core pulsing glow
-            core.material.emissiveIntensity = 0.3 + Math.sin(ariaTime * 3) * 0.15;
 
             robotRenderer.render(robotScene, robotCamera);
         }
@@ -2685,7 +2866,7 @@
             
             projects: "Sanjna has built impressive production-scale projects: **CSIR-CSIO RAG System** (70% efficiency gain, still in production), **Federated Brain Tumor Detection** (privacy-preserving healthcare AI), **F1 Dynamic Visual Audit** (Top 10% nationwide selection), **Deepfake Detection** (1st place hackathon winner with bias mitigation), **Multimodal Medical Assistant** (Google Kaggle swag recipient), **Aegis AI Studio** (complete local AI platform with 6 HuggingFace models), and **askLLM** (enterprise document analysis with sub-3 second response times).",
             
-            skills: "Sanjna's technical stack includes: **Languages**: Python, C++, HTML, CSS, SQL, Data Structures & Algorithms. **Frameworks**: PyTorch, TensorFlow, Scikit-Learn, RAG, Agentic Workflows, Multimodal AI, LLM Fine-tuning. **Specializations**: NLP, Computer Vision, Federated Learning, Machine Learning. **Infrastructure**: FAISS, ChromaDB, Docker, Git/GitHub, FastAPI, Streamlit. **Cloud**: Colab, Kaggle. **Tools**: Jupyter, VS Code, HuggingFace, Gemini models.",
+            skills: "Sanjna's technical stack includes: **Languages**: Python, C++, HTML, CSS, SQL, Data Structures & Algorithms. **Frameworks**: PyTorch, TensorFlow, Scikit-Learn, RAG, Agentic Workflows, Multimodal AI, LLM Fine-tuning. **Specializations**: NLP, Computer Vision, Federated Learning, Machine Learning. **Infrastructure**: FAISS, ChromaDB, Docker, Git/GitHub, FastAPI, LangChain.",
             
             csir: "At CSIR-CSIO (India's premier scientific institution), Sanjna developed an AI-powered query agent for the Material Science Research Department. Using RAG pipelines with BERT, LangChain, FAISS, and Gemini models, she reduced research document processing time from 10 minutes to 3 minutes - a 70% efficiency improvement. The system is still in production, processing 66+ PDFs and images.",
             
